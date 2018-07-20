@@ -17,12 +17,11 @@ RUN curl https://codeload.github.com/fusiondirectory/schema2ldif/tar.gz/${SCHEMA
 ## Install FusionDirectory
     mkdir -p /usr/src/fusiondirectory /usr/src/fusiondirectory-plugins/fusiondirectory-plugins && \
     curl https://codeload.github.com/fusiondirectory/fusiondirectory/tar.gz/fusiondirectory-${FUSIONDIRECTORY_VERSION} | tar xvfz - --strip 1 -C /usr/src/fusiondirectory && \
-    curl https://codeload.github.com/fusiondirectory/fusiondirectory-plugins/tar.gz/fusiondirectory-${FUSIONDIRECTORY_VERSION} | tar xvfz - --strip 1 -C /usr/src/fusiondirectory-plugins
+    curl https://codeload.github.com/fusiondirectory/fusiondirectory-plugins/tar.gz/fusiondirectory-${FUSIONDIRECTORY_VERSION} | tar xvfz - --strip 1 -C /usr/src/fusiondirectory-plugins && \
     \
 ### Cleanup
-    rm -rf /usr/src/*
     \
-RUN mkdir -p /etc/openldap/schema/fusiondirectory && \
+    mkdir -p /etc/openldap/schema/fusiondirectory && \
     rm -rf /usr/src/fusiondirectory/contrib/openldap/rfc2307bis.schema && \
     cp /usr/src/fusiondirectory/contrib/bin/fusiondirectory-insert-schema /usr/sbin && \
     cp -R /usr/src/fusiondirectory/contrib/openldap/*.schema /etc/openldap/schema/fusiondirectory && \
