@@ -67,7 +67,7 @@ changetype: delete
 
 EOF
 
-	silent ldapmodify -x -D "cn=admin,${BASE_DN}" -w $CONFIG_PASS -f /tmp/01-fusiondirectory-delete.ldif
+	silent ldapmodify -H 'ldapi:///' -D "cn=admin,$BASE_DN" -w $ADMIN_PASS -f /tmp/01-fusiondirectory-delete.ldif
 	
 	### Install Core Fusion Directory Schemas
 	silent fusiondirectory-insert-schema
@@ -110,7 +110,7 @@ userPassword: ${READONLY_USER_PASS}
 EOF
 	fi
     
-	silent ldapmodify -x -D "cn=admin,${BASE_DN}" -w $CONFIG_PASS -f /tmp/02-fusiondirectory-base.ldif
+	silent ldapmodify -H 'ldapi:///' -D "cn=admin,${BASE_DN}" -w $ADMIN_PASS -f /tmp/02-fusiondirectory-base.ldif
 
     ### Step 3
 	cat <<EOF > /tmp/03-fusiondirectory-add.ldif
@@ -253,7 +253,7 @@ objectClass: organizationalUnit
 ou: snapshots
 EOF
 
-	silent ldapmodify -x -D "cn=admin,${BASE_DN}" -w $CONFIG_PASS -f /tmp/03-fusiondirectory-add.ldif
+	silent ldapmodify -H 'ldapi:///' -D "cn=admin,${BASE_DN}" -w $ADMIN_PASS -f /tmp/03-fusiondirectory-add.ldif
 
 ### Step 4
 	cat <<EOF > /tmp/04-fusiondirectory-ppolicy.ldif
@@ -272,7 +272,7 @@ olcPPolicyUseLockout: TRUE
 olcPPolicyHashCleartext: TRUE
 EOF
 
-	silent ldapmodify -x -D "cn=admin,${BASE_DN}" -w $CONFIG_PASS -f /tmp/04-fusiondirectory-ppolicy.ldif
+	silent ldapmodify -H 'ldapi:///' -D "cn=admin,${BASE_DN}" -w $ADMIN_PASS -f /tmp/04-fusiondirectory-ppolicy.ldif
     rm -rf /tmp/*.ldif
 fi
 

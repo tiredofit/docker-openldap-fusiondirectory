@@ -1,4 +1,4 @@
-FROM tiredofit/openldap:latest
+FROM registry.selfdesign.org/docker/openldap:latest
 LABEL maintainer="Dave Conroy (dave at tiredofit dot ca)"
 
 ## Set Environment Varialbes
@@ -7,10 +7,11 @@ ENV FUSIONDIRECTORY_VERSION=1.2.1 \
 
 RUN apk update && \
     apk add \
-        perl
+        perl \
+        && \
     \
 ## Install Schema2LDIF
-RUN curl https://codeload.github.com/fusiondirectory/schema2ldif/tar.gz/${SCHEMA2LDIF_VERSION} | tar xvfz - --strip 1 -C /usr && \
+    curl https://codeload.github.com/fusiondirectory/schema2ldif/tar.gz/${SCHEMA2LDIF_VERSION} | tar xvfz - --strip 1 -C /usr && \
     rm -rf /usr/CHANGELOG && \
     rm -rf /usr/LICENSE && \
     \
