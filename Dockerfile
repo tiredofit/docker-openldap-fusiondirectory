@@ -1,4 +1,4 @@
-FROM registry.selfdesign.org/docker/openldap:latest
+FROM tiredofit/openldap:latest
 LABEL maintainer="Dave Conroy (dave at tiredofit dot ca)"
 
 ## Set Environment Varialbes
