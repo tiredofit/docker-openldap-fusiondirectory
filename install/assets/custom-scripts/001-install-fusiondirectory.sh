@@ -339,7 +339,7 @@ fd_apply() {
   	A="A"
   	ARG="-i"
   fi
-  echo "** [openldap-fusiondirectory] ${RE}${A}pplying Fudion Directory "$@" schema"
+  echo "** [openldap-fusiondirectory] ${RE}${A}pplying Fusion Directory "$@" schema"
 }
 
 ## Handle the core plugins

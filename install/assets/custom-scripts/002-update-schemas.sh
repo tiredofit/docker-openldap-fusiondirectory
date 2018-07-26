@@ -15,7 +15,7 @@ silent() {
 }
 
 if [ -e "$FUSIONDIRECTORY_INSTALLED" ]; then
-	  if [ -f /assets/fusiondirectory-custom/ ] ; then
+	  if [ -d /assets/fusiondirectory-custom/ ] ; then
 	    mkdir -p /tmp/schema
 	    mv /etc/openldap/schema/fusiondirectory/* /tmp/schema
 	  
@@ -24,7 +24,7 @@ if [ -e "$FUSIONDIRECTORY_INSTALLED" ]; then
 	        cp -R ${f} /etc/openldap/schema/fusiondirectory
         done
 	    
-	    cd /etc/ldap/schema/fusiondirectory
+	    cd /etc/openldap/schema/fusiondirectory
 	    echo "** [openldap-fusiondirectory] Attempting to Install new Schemas"
 	    silent fusiondirectory-insert-schema -i *.schema
 	    silent fusiondirectory-insert-schema -m *.schema
