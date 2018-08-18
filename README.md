@@ -8,7 +8,7 @@ Layers](https://images.microbadger.com/badges/image/tiredofit/openldap-fusiondir
 
 # Introduction
 
-Dockerfile to build a [OpenLDAP Server](https://sourceforge.net/projects/openldap-fusiondirectory/) with [Fusion Directory] Schema's Included.
+Dockerfile to build a [OpenLDAP Server](https://sourceforge.net/projects/openldap-fusiondirectory/) with [Fusion Directory](https://www.fusiondirectory.org) Schema's Included.
 It includes all the functions in the [OpenLDAP Image](https://github.com/tiredofit/docker-openldap) such as Multi-Master Replication, TLS, and other features.
 
 This Container uses [tiredofit/openldap](https://github.com/tiredofit/docker-openldap) as a base.

@@ -30,6 +30,6 @@ if [ -e "$FUSIONDIRECTORY_INSTALLED" ]; then
 	    silent fusiondirectory-insert-schema -m *.schema
 	    cd /tmp
 	    rm -rf /etc/openldap/schema/fusiondirectory/*
-	    mv /tmp/schema/* /etc/openldap/schema/fusiondirectory/*
+	    mv /tmp/schema/* /etc/openldap/schema/fusiondirectory/
 	  fi
 fi

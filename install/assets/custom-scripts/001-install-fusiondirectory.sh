@@ -45,7 +45,10 @@ if [ ! -e ${FUSIONDIRECTORY_INSTALLED} ]; then
 	CN_ADMIN_BS64=$(echo -n ${CN_ADMIN} | base64 | tr -d '\n')
 	FUSIONDIRECTORY_ADMIN_USER=${FUSIONDIRECTORY_ADMIN_USER:-fd-admin}
 	FUSIONDIRECTORY_ADMIN_PASS=${FUSIONDIRECTORY_ADMIN_PASS:-"admin"}
-	ORGANIZATION=${ORGANIZATION:-Example Organization}
+	ADMIN_PASS_ENCRYPTED=`slappasswd -s $ADMIN_PASS`
+  FUSIONDIRECTORY_ADMIN_PASS_ENCRYPTED=`slappasswd -s $FUSIONDIRECTORY_ADMIN_PASS`
+  READONLY_USER_PASS_ENCRYPTED=`slappasswd -s $READONLY_USER_PASS`
+  ORGANIZATION=${ORGANIZATION:-Example Organization}
 	UID_FD_ADMIN="uid=${FUSIONDIRECTORY_ADMIN_USER},${BASE_DN}"
 	UID_FD_ADMIN_BS64=$(echo -n ${UID_FD_ADMIN} | base64 | tr -d '\n')
 
@@ -93,7 +96,7 @@ objectClass: simpleSecurityObject
 objectClass: organizationalRole
 cn: admin
 description: LDAP administrator
-userPassword: ${ADMIN_PASS}
+userPassword: ${ADMIN_PASS_ENCRYPTED}
 
 EOF
 
@@ -106,7 +109,7 @@ objectClass: simpleSecurityObject
 objectClass: organizationalRole
 cn: cn=${READONLY_USER_USER}
 description: LDAP read only user
-userPassword: ${READONLY_USER_PASS}
+userPassword: ${READONLY_USER_PASS_ENCRYPTED}
 EOF
 	fi
     
@@ -123,7 +126,7 @@ cn: System Administrator
 sn: Administrator
 givenName: System
 uid: ${FUSIONDIRECTORY_ADMIN_USER}
-userPassword: ${FUSIONDIRECTORY_ADMIN_PASS}
+userPassword: ${FUSIONDIRECTORY_ADMIN_PASS_ENCRYPTED}
 
 dn: ou=aclroles,${BASE_DN}
 changeType: add
@@ -203,8 +206,6 @@ fdShells: /bin/ash
 fdShells: /bin/bash
 fdShells: /bin/csh
 fdShells: /bin/sh
-fdShells: /bin/ksh
-fdShells: /bin/tcsh
 fdShells: /bin/dash
 fdShells: /bin/zsh
 fdShells: /sbin/nologin
@@ -253,7 +254,7 @@ objectClass: organizationalUnit
 ou: snapshots
 EOF
 
-	silent ldapmodify -H 'ldapi:///' -D "cn=admin,${BASE_DN}" -w $ADMIN_PASS -f /tmp/03-fusiondirectory-add.ldif
+	silent ldapadd -H 'ldapi:///' -D "cn=admin,${BASE_DN}" -w $ADMIN_PASS -f /tmp/03-fusiondirectory-add.ldif
 
 ### Step 4
 	cat <<EOF > /tmp/04-fusiondirectory-ppolicy.ldif
@@ -272,8 +273,9 @@ olcPPolicyUseLockout: TRUE
 olcPPolicyHashCleartext: TRUE
 EOF
 
-	silent ldapmodify -H 'ldapi:///' -D "cn=admin,${BASE_DN}" -w $ADMIN_PASS -f /tmp/04-fusiondirectory-ppolicy.ldif
-    rm -rf /tmp/*.ldif
+
+	silent ldapadd -Y EXTERNAL -H 'ldapi:///' -Q -f /tmp/04-fusiondirectory-ppolicy.ldif
+  rm -rf /tmp/*.ldif
 fi
 
 ### Insert Plugin Schemas
