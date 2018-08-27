@@ -1,3 +1,7 @@
+## 6.0.1 2018-08-27 <dave at tiredofit dot ca>
+
+* Base upgrade for tiredofit/openldap
+
 ## 6.0 2018-07-20 <dave at tiredofit dot ca>
 
 * Rebase from new tiredofit/openldap image based on Alpine
