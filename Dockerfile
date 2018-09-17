@@ -2,7 +2,7 @@ FROM tiredofit/openldap:latest
 LABEL maintainer="Dave Conroy (dave at tiredofit dot ca)"
 
 ## Set Environment Varialbes
-ENV FUSIONDIRECTORY_VERSION=1.2.1
+ENV FUSIONDIRECTORY_VERSION=1.2.2
 
 ## Install FusionDirectory
 RUN mkdir -p /usr/src/fusiondirectory /usr/src/fusiondirectory-plugins/fusiondirectory-plugins && \

@@ -1,3 +1,7 @@
+## 6.0.2 2018-09-17 <dave at tiredofit dot ca>
+
+* Update Schemas to Fusiondirectory 1.2.2
+
 ## 6.0.1 2018-08-27 <dave at tiredofit dot ca>
 
 * Base upgrade for tiredofit/openldap
