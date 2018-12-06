@@ -1,3 +1,7 @@
+## 6.1 2018-12-03 <dave at tiredofit dot ca>
+
+* Match Base
+
 ## 6.0.2 2018-09-17 <dave at tiredofit dot ca>
 
 * Update Schemas to Fusiondirectory 1.2.2
