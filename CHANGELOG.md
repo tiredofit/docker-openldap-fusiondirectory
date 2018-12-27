@@ -1,3 +1,8 @@
+## 6.2 2018-12-27 <dave at tiredofit dot ca>
+
+* Match base tiredofit/openldap
+* FusionDirectory 1.2.3
+
 ## 6.1 2018-12-03 <dave at tiredofit dot ca>
 
 * Match Base

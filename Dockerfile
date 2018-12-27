@@ -2,7 +2,7 @@ FROM tiredofit/openldap:latest
 LABEL maintainer="Dave Conroy (dave at tiredofit dot ca)"
 
 ## Set Environment Varialbes
-ENV FUSIONDIRECTORY_VERSION=1.2.2 \
+ENV FUSIONDIRECTORY_VERSION=1.2.3 \
     SCHEMA2LDIF_VERSION=1.3
     
 ## Install Schema2LDIF
