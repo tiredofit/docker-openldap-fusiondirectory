@@ -26,7 +26,10 @@ if [ ! -e ${FUSIONDIRECTORY_INSTALLED} ]; then
 	    done
 
 	    BASE_DN=${BASE_DN::-1}
-	  fi
+	fi
+
+	# Assign the ROOT variable needed below. This is the first part of the suffix
+	ROOT="$(echo ${BASE_DN} | cut -d '=' -f 2 | cut -d ',' -f 1)"
 
 	IFS='.' read -a domain_elems <<< "${DOMAIN}"
 	SUFFIX=""
