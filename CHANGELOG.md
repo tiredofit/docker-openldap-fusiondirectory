@@ -1,3 +1,7 @@
+## 6.4 2019-03-29 <dave at tiredofit dot ca>
+
+* Match base tiredofit/openldap
+
 ## 6.2.1 2019-03-21 <dave at tiredofit dot ca>
 
 * Match base tiredofit/openldap
