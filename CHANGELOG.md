@@ -1,3 +1,7 @@
+## 6.4.1 2019-04-08 <smacz42@github>
+
+* Add additional Root directive to support alternative Base DN's
+
 ## 6.4 2019-03-29 <dave at tiredofit dot ca>
 
 * Match base tiredofit/openldap
