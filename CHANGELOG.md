@@ -1,14 +1,6 @@
-## 6.4.1 2019-04-08 <smacz42@github>
+## 6.3 2019-05-06 <dave at tiredofit dot ca>
 
-* Add additional Root directive to support alternative Base DN's
-
-## 6.4 2019-03-29 <dave at tiredofit dot ca>
-
-* Match base tiredofit/openldap
-
-## 6.2.1 2019-03-21 <dave at tiredofit dot ca>
-
-* Match base tiredofit/openldap
+* FusionDirectory 1.3.0
 
 ## 6.2 2018-12-27 <dave at tiredofit dot ca>
 

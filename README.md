@@ -1,4 +1,4 @@
-# tiredofit/openldap-fusiondirectory
+# registry.selfdesign.org/docker/openldap-fusiondirectory
 
 [![Build Status](https://img.shields.io/docker/build/tiredofit/openldap-fusiondirectory.svg)](https://hub.docker.com/r/tiredofit/openldap-fusiondirectory)
 [![Docker Pulls](https://img.shields.io/docker/pulls/tiredofit/openldap-fusiondirectory.svg)](https://hub.docker.com/r/tiredofit/openldap-fusiondirectory)
@@ -18,7 +18,7 @@ This Container uses [tiredofit/openldap](https://github.com/tiredofit/docker-ope
 
 # Authors
 
-- [Dave Conroy](daveconroy@tiredofit.ca)
+- [Dave Conroy](daveconroy@selfdesign.org)
 
 # Table of Contents
 
