@@ -35,9 +35,10 @@ if [ ! -e ${FUSIONDIRECTORY_INSTALLED} ]; then
 	for elem in "${domain_elems[@]}" ; do
 	    if [ "x${SUFFIX}" = x ] ; then
 	        SUFFIX="dc=${elem}"
+		BASE_DN="${SUFFIX}"
 	        ROOT="${elem}"
 	    else
-	        BASE_DN="${SUFFIX},dc=${elem}"
+	        BASE_DN="${BASE_DN},dc=${elem}"
 	    fi
 	done
 
