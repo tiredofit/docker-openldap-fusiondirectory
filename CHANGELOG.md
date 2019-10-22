@@ -1,3 +1,7 @@
+## 6.3.1 2019-10-21 <nokidev@github>
+
+* Allow BASE_DN to support sub OUs
+
 ## 6.3 2019-05-06 <dave at tiredofit dot ca>
 
 * FusionDirectory 1.3.0
