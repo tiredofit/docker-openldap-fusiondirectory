@@ -1,21 +1,12 @@
 #!/usr/bin/with-contenv bash
 
-if [ "$DEBUG_MODE" = "TRUE" ] || [ "$DEBUG_MODE" = "true" ];  then
-  set -x
-fi
-
-silent() {
-  if [ "$DEBUG_MODE" = "TRUE" ] || [ "$DEBUG_MODE" = "true" ];  then
-    "$@"
-  else
-    "$@" > /dev/null 2>&1
-  fi
-}
+for s in /assets/functions/*; do source $s; done
 
 FUSIONDIRECTORY_INSTALLED="/etc/openldap/slapd.d/docker-openldap-fusiondirectory-was-installed" 
+PROCESS_NAME="openldap-fusiondirectory"
 
 if [ ! -e ${FUSIONDIRECTORY_INSTALLED} ]; then
-	echo "** [openldap-fusiondirectory] First time Fusion Directory install detected"
+	print_warn "First time Fusion Directory install detected"
 
 
 	if [ -z "$BASE_DN" ]; then
@@ -35,10 +26,9 @@ if [ ! -e ${FUSIONDIRECTORY_INSTALLED} ]; then
 	for elem in "${domain_elems[@]}" ; do
 	    if [ "x${SUFFIX}" = x ] ; then
 	        SUFFIX="dc=${elem}"
-		BASE_DN="${SUFFIX}"
 	        ROOT="${elem}"
 	    else
-	        BASE_DN="${BASE_DN},dc=${elem}"
+	        BASE_DN="${SUFFIX},dc=${elem}"
 	    fi
 	done
 
@@ -342,7 +332,7 @@ fd_apply() {
   	A="A"
   	ARG="-i"
   fi
-  echo "** [openldap-fusiondirectory] ${RE}${A}pplying Fusion Directory "$@" schema"
+  print_notice "${RE}${A}pplying Fusion Directory "$@" schema"
 }
 
 ## Handle the core plugins

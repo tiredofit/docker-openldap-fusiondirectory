@@ -4,7 +4,7 @@ LABEL maintainer="Dave Conroy (dave at tiredofit dot ca)"
 ## Set Environment Varialbes
 ENV FUSIONDIRECTORY_VERSION=1.3 \
     SCHEMA2LDIF_VERSION=1.3
-    
+
 ## Install Schema2LDIF
 RUN curl https://repos.fusiondirectory.org/sources/schema2ldif/schema2ldif-${SCHEMA2LDIF_VERSION}.tar.gz | tar xvfz - --strip 1 -C /usr && \
     rm -rf /usr/CHANGELOG && \
@@ -29,4 +29,4 @@ RUN curl https://repos.fusiondirectory.org/sources/schema2ldif/schema2ldif-${SCH
     rm -rf /usr/src/*
 
 ### Add Files
-   ADD install /
+ADD install /

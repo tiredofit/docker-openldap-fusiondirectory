@@ -1,6 +1,8 @@
-## 6.3.1 2019-10-21 <nokidev@github>
+## 6.4.0 2020-01-02 <dave at tiredofit dot ca>
 
-* Allow BASE_DN to support sub OUs
+   ### Added
+      - Changes to support new tiredofit/alpine and tiredofit/openldap bases
+
 
 ## 6.3 2019-05-06 <dave at tiredofit dot ca>
 
