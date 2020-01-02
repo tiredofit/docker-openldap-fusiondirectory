@@ -1,13 +1,12 @@
 #!/usr/bin/with-contenv bash
 
 for s in /assets/functions/*; do source $s; done
+PROCESS_NAME="openldap-fusiondirectory"
 
 FUSIONDIRECTORY_INSTALLED="/etc/openldap/slapd.d/docker-openldap-fusiondirectory-was-installed" 
-PROCESS_NAME="openldap-fusiondirectory"
 
 if [ ! -e ${FUSIONDIRECTORY_INSTALLED} ]; then
 	print_warn "First time Fusion Directory install detected"
-
 
 	if [ -z "$BASE_DN" ]; then
 	    IFS='.' read -ra BASE_DN_TABLE <<< "$DOMAIN"
@@ -26,9 +25,10 @@ if [ ! -e ${FUSIONDIRECTORY_INSTALLED} ]; then
 	for elem in "${domain_elems[@]}" ; do
 	    if [ "x${SUFFIX}" = x ] ; then
 	        SUFFIX="dc=${elem}"
+          BASE_DN="${SUFFIX}" 
 	        ROOT="${elem}"
 	    else
-	        BASE_DN="${SUFFIX},dc=${elem}"
+          BASE_DN="${BASE_DN},dc=${elem}" 
 	    fi
 	done
 

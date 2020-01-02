@@ -1,3 +1,9 @@
+## 6.4.1 2020-01-02 <dave at tiredofit dot ca>
+
+   ### Changed
+      - Fixed reverted commit to fix BASE_DN being improperly set whenusing subdomains
+
+
 ## 6.4.0 2020-01-02 <dave at tiredofit dot ca>
 
    ### Added
