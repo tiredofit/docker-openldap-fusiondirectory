@@ -16,7 +16,7 @@ function file_env () {
     val="${!var}"
   fi
   if [ -z ${val} ]; then
-    echo >&2 "error: neither $var nor $fileVar are set but are required"
+    print_error "error: neither $var nor $fileVar are set but are required"
     exit 1
   fi
   export "$var"="$val"
