@@ -5,6 +5,28 @@ PROCESS_NAME="openldap-fusiondirectory"
 
 FUSIONDIRECTORY_INSTALLED="/etc/openldap/slapd.d/docker-openldap-fusiondirectory-was-installed" 
 
+# usage: file_env VAR [DEFAULT]
+#    ie: file_env 'XYZ_DB_PASSWORD' 'example'
+# (will allow for "$XYZ_DB_PASSWORD_FILE" to fill in the value of
+#  "$XYZ_DB_PASSWORD" from a file, especially for Docker's secrets feature)
+function file_env () {
+  local var="$1"
+  local fileVar="${var}_FILE"
+  local def="${2:-}"
+  local val="$def"
+  if [ "${!fileVar:-}" ]; then
+    val="$(cat "${!fileVar}")"
+  elif [ "${!var:-}" ]; then
+    val="${!var}"
+  fi
+  if [ -z ${val} ]; then
+    print_error "error: neither $var nor $fileVar are set but are required"
+    exit 1
+  fi
+  export "$var"="$val"
+  unset "$fileVar"
+}
+
 if [ ! -e ${FUSIONDIRECTORY_INSTALLED} ]; then
 	print_warn "First time Fusion Directory install detected"
 
@@ -35,9 +57,11 @@ if [ ! -e ${FUSIONDIRECTORY_INSTALLED} ]; then
 	CN_ADMIN="cn=admin,ou=aclroles,${BASE_DN}"
 	CN_ADMIN_BS64=$(echo -n ${CN_ADMIN} | base64 | tr -d '\n')
 	FUSIONDIRECTORY_ADMIN_USER=${FUSIONDIRECTORY_ADMIN_USER:-fd-admin}
-	FUSIONDIRECTORY_ADMIN_PASS=${FUSIONDIRECTORY_ADMIN_PASS:-"admin"}
+  file_env "FUSIONDIRECTORY_ADMIN_PASS" "admin"
+  file_env "ADMIN_PASS"
 	ADMIN_PASS_ENCRYPTED=`slappasswd -s $ADMIN_PASS`
   FUSIONDIRECTORY_ADMIN_PASS_ENCRYPTED=`slappasswd -s $FUSIONDIRECTORY_ADMIN_PASS`
+  file_env "READONLY_USER_PASS"
   READONLY_USER_PASS_ENCRYPTED=`slappasswd -s $READONLY_USER_PASS`
   ORGANIZATION=${ORGANIZATION:-Example Organization}
 	UID_FD_ADMIN="uid=${FUSIONDIRECTORY_ADMIN_USER},${BASE_DN}"
