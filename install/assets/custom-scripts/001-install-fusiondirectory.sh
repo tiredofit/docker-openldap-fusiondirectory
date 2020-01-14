@@ -334,6 +334,7 @@ if [ ! -e ${FUSIONDIRECTORY_INSTALLED} ] || [ "$REAPPLY_PLUGIN_SCHEMAS" = "TRUE"
   PLUGIN_RENATER_PARTAGE=${PLUGIN_RENATER_PARTAGE:-"FALSE"}
   PLUGIN_REPOSITORY=${PLUGIN_REPOSITORY:-"FALSE"}
   PLUGIN_SAMBA=${PLUGIN_SAMBA:-"FALSE"}
+  PLUGIN_SINAPS=${PLUGIN_SINAPS:-"FALSE"}
   PLUGIN_SOGO=${PLUGIN_SOGO:-"FALSE"}
   PLUGIN_SPAMASSASSIN=${PLUGIN_SPAMASSASSIN:-"FALSE"}
   PLUGIN_SQUID=${PLUGIN_SQUID:-"FALSE"}
@@ -381,6 +382,11 @@ fd_apply() {
   if [[ "$PLUGIN_AUDIT" != "FALSE" ]] && [[ "$PLUGIN_AUDIT" != "false" ]];  then
     fd_apply audit
     silent fusiondirectory-insert-schema $ARG audit*.schema
+  fi
+
+  if [[ "$PLUGIN_AUTOFS" != "FALSE" ]] && [[ "$PLUGIN_AUTOFS" != "false" ]];  then
+    fd_apply AutoFS
+    silent fusiondirectory-insert-schema $ARG autofs*.schema
   fi
 
   if [[ "$PLUGIN_ALIAS" != "FALSE" ]] && [[ "$PLUGIN_ALIAS" != "false" ]];  then
@@ -465,7 +471,7 @@ fd_apply() {
     silent fusiondirectory-insert-schema $ARG ipmi*.schema
   fi
 
-  if [[ "$PLUGIN_NAGIOS" != "FALSE" ]] && [[ "$PLUGIN_MIXEDGROUPS" != "false" ]];  then
+  if [[ "$PLUGIN_NAGIOS" != "FALSE" ]] && [[ "$PLUGIN_NAGIOS" != "false" ]];  then
     fd_apply Nagios
     silent fusiondirectory-insert-schema $ARG nagios*.schema
     silent fusiondirectory-insert-schema $ARG netways*.schema
@@ -501,6 +507,11 @@ fd_apply() {
     silent fusiondirectory-insert-schema $ARG puppet*.schema
   fi
 
+  if [[ "$PLUGIN_RENATER_PARTAGE" != "FALSE" ]] && [[ "$PLUGIN_RENATER_PARTAGE" != "false" ]];  then
+    fd_apply Repository
+    silent fusiondirectory-insert-schema $ARG renater-partage*.schema
+  fi
+
   if [[ "$PLUGIN_REPOSITORY" != "FALSE" ]] && [[ "$PLUGIN_REPOSITORY" != "false" ]];  then
     fd_apply Repository
     silent fusiondirectory-insert-schema $ARG repository*.schema
@@ -529,6 +540,11 @@ fd_apply() {
   if [[ "$PLUGIN_SSH" != "FALSE" ]] && [[ "$PLUGIN_SSH" != "false" ]];  then
     fd_apply SSH
     silent fusiondirectory-insert-schema $ARG openssh*.schema
+  fi
+
+  if [[ "$PLUGIN_SINAPS" != "FALSE" ]] && [[ "$PLUGIN_SINAPS" != "false" ]];  then
+    fd_apply Sinaps
+    silent fusiondirectory-insert-schema $ARG sinaps*.schema
   fi
 
   if [[ "$PLUGIN_SOGO" != "FALSE" ]] && [[ "$PLUGIN_SOGO" != "false" ]];  then
