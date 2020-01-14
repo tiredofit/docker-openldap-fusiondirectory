@@ -1,3 +1,15 @@
+## 6.5.0 2020-01-14 <sagreal@github>
+
+   ### Added
+      - Add support for Sinaps Plugin
+      - Add Secrets Support
+ 
+   ### Changed
+      - Fix AutoFS Plugin
+      - Fix Nagios Plugin
+      - Fix Renater Partage Plugin
+
+
 ## 6.4.1 2020-01-02 <dave at tiredofit dot ca>
 
    ### Changed
