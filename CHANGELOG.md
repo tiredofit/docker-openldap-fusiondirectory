@@ -1,3 +1,9 @@
+## 6.6.0 2020-06-15 <dave at tiredofit dot ca>
+
+   ### Added
+      - Update to support tiredofit/alpine 5.x base image
+
+
 ## 6.5.0 2020-01-14 <sagreal@github>
 
    ### Added

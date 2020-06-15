@@ -1,31 +1,10 @@
 #!/usr/bin/with-contenv bash
 
-for s in /assets/functions/*; do source $s; done
+source /assets/functions/00-container
+prepare_service both
 PROCESS_NAME="openldap-fusiondirectory"
 
 FUSIONDIRECTORY_INSTALLED="/etc/openldap/slapd.d/docker-openldap-fusiondirectory-was-installed" 
-
-# usage: file_env VAR [DEFAULT]
-#    ie: file_env 'XYZ_DB_PASSWORD' 'example'
-# (will allow for "$XYZ_DB_PASSWORD_FILE" to fill in the value of
-#  "$XYZ_DB_PASSWORD" from a file, especially for Docker's secrets feature)
-function file_env () {
-  local var="$1"
-  local fileVar="${var}_FILE"
-  local def="${2:-}"
-  local val="$def"
-  if [ "${!fileVar:-}" ]; then
-    val="$(cat "${!fileVar}")"
-  elif [ "${!var:-}" ]; then
-    val="${!var}"
-  fi
-  if [ -z ${val} ]; then
-    print_error "error: neither $var nor $fileVar are set but are required"
-    exit 1
-  fi
-  export "$var"="$val"
-  unset "$fileVar"
-}
 
 if [ ! -e ${FUSIONDIRECTORY_INSTALLED} ]; then
 	print_warn "First time Fusion Directory install detected"
@@ -68,7 +47,7 @@ if [ ! -e ${FUSIONDIRECTORY_INSTALLED} ]; then
 	UID_FD_ADMIN_BS64=$(echo -n ${UID_FD_ADMIN} | base64 | tr -d '\n')
 
 	### Step 1
-	if [ "$ENABLE_READONLY_USER" = "TRUE" ] || [ "$ENABLE_READONLY_USER" = "true" ];  then
+	if var_true $ENABLE_READONLY_USER ; then
 	    cat <<EOF >> /tmp/01-fusiondirectory-delete.ldif
 dn: cn=${READONLY_USER_USER},${BASE_DN}
 changetype: delete
@@ -115,7 +94,7 @@ userPassword: ${ADMIN_PASS_ENCRYPTED}
 
 EOF
 
-	if [ "$ENABLE_READONLY_USER" = "TRUE" ] || [ "$ENABLE_READONLY_USER" = "true" ];  then
+	if var_true $ENABLE_READONLY_USER ; then
     	cat <<EOF >> /tmp/02-fusiondirectory-base.ldif
 
 dn: cn=${READONLY_USER_USER},${BASE_DN}
@@ -294,7 +273,7 @@ EOF
 fi
 
 ### Insert Plugin Schemas
-if [ ! -e ${FUSIONDIRECTORY_INSTALLED} ] || [ "$REAPPLY_PLUGIN_SCHEMAS" = "TRUE" ] || [ "$REAPPLY_PLUGIN_SCHEMAS" = "true" ];  then
+if [ ! -e ${FUSIONDIRECTORY_INSTALLED} ] || var_true $REAPPLY_PLUGIN_SCHEMAS ; then
   ### Determine which plugins we want installed 
   PLUGIN_ALIAS=${PLUGIN_ALIAS:-"FALSE"}
   PLUGIN_APPLICATIONS=${PLUGIN_APPLICATIONS:-"FALSE"}
@@ -349,7 +328,7 @@ if [ ! -e ${FUSIONDIRECTORY_INSTALLED} ] || [ "$REAPPLY_PLUGIN_SCHEMAS" = "TRUE"
   PLUGIN_WEBSERVICE=${PLUGIN_WEBSERVICE:-"FALSE"}
 
 fd_apply() {
-  if [ "$REAPPLY_PLUGIN_SCHEMAS" = "TRUE" ] || [ "$REAPPLY_PLUGIN_SCHEMAS" = "true" ];  then
+  if var_true $REAPPLY_PLUGIN_SCHEMAS ; then
     RE="Re"
     A="a"
     ARG="-m"
@@ -361,7 +340,7 @@ fd_apply() {
 }
 
 ## Handle the core plugins
-  if [ "$REAPPLY_PLUGIN_SCHEMAS" = "TRUE" ] || [ "$REAPPLY_PLUGIN_SCHEMAS" = "true" ];  then
+  if var_true $REAPPLY_PLUGIN_SCHEMAS ; then
   	fd_apply core
   	fusiondirectory-insert-schema -m core*.schema
   	fusiondirectory-insert-schema -m ldapns.schema
@@ -369,233 +348,233 @@ fd_apply() {
   fi
 
 ### Import / Modify Schemas - Put Mail First
-  if [[ "$PLUGIN_MAIL" != "FALSE" ]] && [[ "$PLUGIN_MAIL" != "false" ]];  then
+  if var_true $PLUGIN_MAIL ; then
     fd_apply mail
     silent fusiondirectory-insert-schema $ARG mail*.schema
   fi
   
-  if [[ "$PLUGIN_SYSTEMS" != "FALSE" ]] && [[ "$PLUGIN_SYSTEMS" != "false" ]];  then
+  if var_true $PLUGIN_SYSTEMS ; then
     fd_apply systems
     silent fusiondirectory-insert-schema $ARG service*.schema
     silent fusiondirectory-insert-schema $ARG systems*.schema
   fi
-  if [[ "$PLUGIN_AUDIT" != "FALSE" ]] && [[ "$PLUGIN_AUDIT" != "false" ]];  then
+  if var_true $PLUGIN_AUDIT ; then
     fd_apply audit
     silent fusiondirectory-insert-schema $ARG audit*.schema
   fi
 
-  if [[ "$PLUGIN_AUTOFS" != "FALSE" ]] && [[ "$PLUGIN_AUTOFS" != "false" ]];  then
+  if var_true $PLUGIN_AUTOFS ; then
     fd_apply AutoFS
     silent fusiondirectory-insert-schema $ARG autofs*.schema
   fi
 
-  if [[ "$PLUGIN_ALIAS" != "FALSE" ]] && [[ "$PLUGIN_ALIAS" != "false" ]];  then
+  if var_true $PLUGIN_ALIAS ; then
     fd_apply alias
     silent fusiondirectory-insert-schema $ARG alias*.schema
   fi
   
-  if [[ "$PLUGIN_APPLICATIONS" != "FALSE" ]] && [[ "$PLUGIN_APPLICATIONS" != "false" ]];  then
+  if var_true $PLUGIN_APPLICATIONS ; then
     fd_apply applications
     silent fusiondirectory-insert-schema $ARG applications*.schema
   fi
 
-  if [[ "$PLUGIN_ARGONAUT" != "FALSE" ]] && [[ "$PLUGIN_ARGONAUT" != "false" ]];  then
+  if var_true $PLUGIN_ARGONAUT ; then
     fd_apply argonaut
     silent fusiondirectory-insert-schema $ARG argonaut*.schema
   fi
   
-  if [[ "$PLUGIN_COMMUNITY" != "FALSE" ]] && [[ "$PLUGIN_COMMUNITY" != "false" ]];  then
+  if var_true $PLUGIN_COMMUNITY ; then
   	fd_apply community
     silent fusiondirectory-insert-schema $ARG community*.schema
   fi
 
-  if [[ "$PLUGIN_CYRUS" != "FALSE" ]] && [[ "$PLUGIN_CYRUS" != "false" ]];  then
+  if var_true $PLUGIN_CYRUS ; then
     fd_apply cyrus
     silent fusiondirectory-insert-schema $ARG cyrus*.schema
   fi
 
-  if [[ "$PLUGIN_DEBCONF" != "FALSE" ]] && [[ "$PLUGIN_DEBCONF" != "false" ]];  then
+  if var_true $PLUGIN_DEBCONF ; then
     fd_apply debconf
     silent fusiondirectory-insert-schema $ARG debconf*.schema
   fi
 
-  if [[ "$PLUGIN_DHCP" != "FALSE" ]] && [[ "$PLUGIN_DHCP" != "false" ]];  then
+  if var_true $PLUGIN_DHCP ; then
     fd_apply DHCP
     silent fusiondirectory-insert-schema $ARG dhcp*.schema
   fi
 
-  if [[ "$PLUGIN_DNS" != "FALSE" ]] && [[ "$PLUGIN_DNS" != "false" ]];  then
+  if var_true $PLUGIN_DNS ; then
     fd_apply DNS
     silent fusiondirectory-insert-schema $ARG dns*.schema
   fi
 
-  if [[ "$PLUGIN_DOVECOT" != "FALSE" ]] && [[ "$PLUGIN_DOVECOT" != "false" ]];  then
+  if var_true $PLUGIN_DOVECOT ; then
     fd_apply dovecot
     silent fusiondirectory-insert-schema $ARG dovecot*.schema
   fi
 
-  if [[ "$PLUGIN_DSA" != "FALSE" ]] && [[ "$PLUGIN_DSA" != "false" ]];  then
+  if var_true $PLUGIN_DSA ; then
     fd_apply DSA
     silent fusiondirectory-insert-schema $ARG dsa*.schema
   fi
 
-  if [[ "$PLUGIN_EJBCA" != "FALSE" ]] && [[ "$PLUGIN_EJBCA" != "false" ]];  then
+  if var_true $PLUGIN_EJBCA ; then
     fd_apply ejbca
     silent fusiondirectory-insert-schema $ARG ejbca*.schema
   fi
 
-  if [[ "$PLUGIN_FAI" != "FALSE" ]] && [[ "$PLUGIN_FAI" != "false" ]];  then
+  if var_true $PLUGIN_FAI ; then
     fd_apply FAI
     silent fusiondirectory-insert-schema $ARG fai*.schema
   fi
 
-  if [[ "$PLUGIN_FREERADIUS" != "FALSE" ]] && [[ "$PLUGIN_FREERADIUS" != "false" ]];  then
+  if var_true $PLUGIN_FREERADIUS ; then
     fd_apply FreeRadius
     silent fusiondirectory-insert-schema $ARG freeradius*.schema
   fi
 
-  if [[ "$PLUGIN_FUSIONINVENTORY" != "FALSE" ]] && [[ "$PLUGIN_FUSIONINVENTORY" != "false" ]];  then
+  if var_true $PLUGIN_FUSIONINVENTORY ; then
     fd_apply Inventory
     silent fusiondirectory-insert-schema $ARG fusioninventory*.schema
     silent fusiondirectory-insert-schema $ARG inventory*.schema
   fi
 
-  if [[ "$PLUGIN_GPG" != "FALSE" ]] && [[ "$PLUGIN_GPG" != "false" ]];  then
+  if var_true $PLUGIN_GPG ; then
     fd_apply GPG
     silent fusiondirectory-insert-schema $ARG gpg*.schema
     silent fusiondirectory-insert-schema $ARG pgp*.schema
   fi
 
-  if [[ "$PLUGIN_IPMI" != "FALSE" ]] && [[ "$PLUGIN_IPMI" != "false" ]];  then
+  if var_true $PLUGIN_IPMI ; then
     fd_apply IPMI
     silent fusiondirectory-insert-schema $ARG ipmi*.schema
   fi
 
-  if [[ "$PLUGIN_NAGIOS" != "FALSE" ]] && [[ "$PLUGIN_NAGIOS" != "false" ]];  then
+  if var_true $PLUGIN_NAGIOS ; then
     fd_apply Nagios
     silent fusiondirectory-insert-schema $ARG nagios*.schema
     silent fusiondirectory-insert-schema $ARG netways*.schema
   fi
 
-  if [[ "$PLUGIN_NETGROUPS" != "FALSE" ]] && [[ "$PLUGIN_NETGROUPS" != "false" ]];  then
+  if var_true $PLUGIN_NETGROUPS ; then
     fd_apply Netgroups
     silent fusiondirectory-insert-schema $ARG netgroups*.schema
   fi
 
-  if [[ "$PLUGIN_NEWSLETTER" != "FALSE" ]] && [[ "$PLUGIN_NEWSLETTER" != "false" ]];  then
+  if var_true $PLUGIN_NEWSLETTER ; then
     fd_apply Newsletter
     silent fusiondirectory-insert-schema $ARG newsletter*.schema
   fi
 
-  if [[ "$PLUGIN_OPSI" != "FALSE" ]] && [[ "$PLUGIN_OPSI" != "false" ]];  then
+  if var_true $PLUGIN_OPSI ; then
     fd_apply OPSI
     silent fusiondirectory-insert-schema $ARG opsi*.schema
   fi
 
-  if [[ "$PLUGIN_PPOLICY" != "FALSE" ]] && [[ "$PLUGIN_PPOLICY" != "false" ]];  then
+  if var_true $PLUGIN_PPOLICY ; then
     fd_apply ppolicy
     silent fusiondirectory-insert-schema $ARG ppolicy*.schema
   fi
 
-  if [[ "$PLUGIN_QUOTA" != "FALSE" ]] && [[ "$PLUGIN_QUOTA" != "false" ]];  then
+  if var_true $PLUGIN_QUOTA ; then
     fd_apply Quota
     silent fusiondirectory-insert-schema $ARG quota*.schema
   fi
 
-  if [[ "$PLUGIN_PUPPET" != "FALSE" ]] && [[ "$PLUGIN_PUPPET" != "false" ]];  then
+  if var_true $PLUGIN_PUPPET ; then
     fd_apply puppet
     silent fusiondirectory-insert-schema $ARG puppet*.schema
   fi
 
-  if [[ "$PLUGIN_RENATER_PARTAGE" != "FALSE" ]] && [[ "$PLUGIN_RENATER_PARTAGE" != "false" ]];  then
+  if var_true $PLUGIN_RENATER_PARTAGE ; then
     fd_apply Repository
     silent fusiondirectory-insert-schema $ARG renater-partage*.schema
   fi
 
-  if [[ "$PLUGIN_REPOSITORY" != "FALSE" ]] && [[ "$PLUGIN_REPOSITORY" != "false" ]];  then
+  if var_true $PLUGIN_REPOSITORY ; then
     fd_apply Repository
     silent fusiondirectory-insert-schema $ARG repository*.schema
   fi
 
-  if [[ "$PLUGIN_SAMBA" != "FALSE" ]] && [[ "$PLUGIN_SAMBA" != "false" ]];  then
+  if var_true $PLUGIN_SAMBA ; then
     fd_apply Samba
     silent fusiondirectory-insert-schema $ARG samba*.schema
   fi
   
-  if [[ "$PLUGIN_PERSONAL" != "FALSE" ]] && [[ "$PLUGIN_PERSONAL" != "false" ]];  then
+  if var_true $PLUGIN_PERSONAL ; then
     fd_apply Personal
     silent fusiondirectory-insert-schema $ARG personal*.schema
   fi
 
-  if [[ "$PLUGIN_POSTFIX" != "FALSE" ]] && [[ "$PLUGIN_POSTFIX" != "false" ]];  then
+  if var_true $PLUGIN_POSTFIX ; then
     fd_apply Postfix
     silent fusiondirectory-insert-schema $ARG postfix*.schema
   fi
 
-  if [[ "$PLUGIN_PUREFTPD" != "FALSE" ]] && [[ "$PLUGIN_PUREFTPD" != "false" ]];  then
+  if var_true $PLUGIN_PUREFTPD ; then
     fd_apply PureFTPd
     silent fusiondirectory-insert-schema $ARG pureftpd*.schema
   fi
 
-  if [[ "$PLUGIN_SSH" != "FALSE" ]] && [[ "$PLUGIN_SSH" != "false" ]];  then
+  if var_true $PLUGIN_SSH ; then
     fd_apply SSH
     silent fusiondirectory-insert-schema $ARG openssh*.schema
   fi
 
-  if [[ "$PLUGIN_SINAPS" != "FALSE" ]] && [[ "$PLUGIN_SINAPS" != "false" ]];  then
+  if var_true $PLUGIN_SINAPS ; then
     fd_apply Sinaps
     silent fusiondirectory-insert-schema $ARG sinaps*.schema
   fi
 
-  if [[ "$PLUGIN_SOGO" != "FALSE" ]] && [[ "$PLUGIN_SOGO" != "false" ]];  then
+  if var_true $PLUGIN_SOGO ; then
     fd_apply SoGo
     silent fusiondirectory-insert-schema $ARG sogo*.schema
     silent fusiondirectory-insert-schema $ARG cal*.schema
   fi
 
-  if [[ "$PLUGIN_SPAMASSASSIN" != "FALSE" ]] && [[ "$PLUGIN_SPAMASSASSIN" != "false" ]];  then
+  if var_true $PLUGIN_SPAMASSASSIN ; then
     fd_apply Spamassassin
     silent fusiondirectory-insert-schema $ARG spamassassin*.schema
   fi
 
-  if [[ "$PLUGIN_SQUID" != "FALSE" ]] && [[ "$PLUGIN_SQUID" != "false" ]];  then
+  if var_true $PLUGIN_SQUID ; then
     fd_apply Squid
     silent fusiondirectory-insert-schema $ARG proxy*.schema
   fi
 
-  if [[ "$PLUGIN_SUBCONTRACTING" != "FALSE" ]] && [[ "$PLUGIN_SUBCONTRACTING" != "false" ]];  then
+  if var_true $PLUGIN_SUBCONTRACTING ; then
     fd_apply Subcontracting
     silent fusiondirectory-insert-schema $ARG subcontracting*.schema
   fi
 
-  if [[ "$PLUGIN_SUDO" != "FALSE" ]] && [[ "$PLUGIN_SUDO" != "false" ]];  then
+  if var_true $PLUGIN_SUDO ; then
     fd_apply sudo
     silent fusiondirectory-insert-schema $ARG sudo*.schema
   fi
 
-  if [[ "$PLUGIN_SUPANN" != "FALSE" ]] && [[ "$PLUGIN_SUPANN" != "false" ]];  then
+  if var_true $PLUGIN_SUPANN ; then
     fd_apply supann
     silent fusiondirectory-insert-schema $ARG internet2*.schema
     silent fusiondirectory-insert-schema $ARG supann*.schema
   fi
 
-  if [[ "$PLUGIN_SYMPA" != "FALSE" ]] && [[ "$PLUGIN_SYMPA" != "false" ]];  then
+  if var_true $PLUGIN_SYMPA ; then
     fd_apply Sympa
     silent fusiondirectory-insert-schema $ARG sympa*.schema
   fi
 
-  if [[ "$PLUGIN_USER_REMINDER" != "FALSE" ]] && [[ "$PLUGIN_USER_REMINDER" != "false" ]];  then
+  if var_true $PLUGIN_USER_REMINDER ; then
     fd_apply reminder
     silent fusiondirectory-insert-schema $ARG user-reminder*.schema
   fi
 
-  if [[ "$PLUGIN_WEBLINK" != "FALSE" ]] && [[ "$PLUGIN_WEBLINK" != "false" ]];  then
+  if var_true $PLUGIN_WEBLINK ; then
   	fd_apply weblink
     silent fusiondirectory-insert-schema $ARG weblink*.schema
   fi
 
+  if var_true $PLUGIN_WEBSERVICE ; then
     fd_apply webservice
-  if [[ "$PLUGIN_WEBSERVICE" != "FALSE" ]] && [[ "$PLUGIN_WEBSERVICE" != "false" ]];  then
     silent fusiondirectory-insert-schema $ARG webservice*.schema
   fi
 

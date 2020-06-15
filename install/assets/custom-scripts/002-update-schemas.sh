@@ -1,6 +1,8 @@
 #!/usr/bin/with-contenv bash
 
-for s in /assets/functions/*; do source $s; done
+source /assets/functions/00-container
+prepare_service both
+
 PROCESS_NAME="openldap-fusiondirectory"
 
 FUSIONDIRECTORY_INSTALLED="/etc/openldap/slapd.d/docker-openldap-fusiondirectory-was-installed" 
