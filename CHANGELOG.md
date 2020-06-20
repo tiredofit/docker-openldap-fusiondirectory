@@ -1,3 +1,11 @@
+## 6.7.0 2020-06-20 <dave at tiredofit dot ca>
+
+   ### Added
+      - Add support for Kopano plugin
+      - Add support for Nextcloud plugin
+      - Add support for Seafile Plugin
+
+
 ## 6.6.0 2020-06-15 <dave at tiredofit dot ca>
 
    ### Added

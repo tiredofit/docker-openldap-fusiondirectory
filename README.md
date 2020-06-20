@@ -117,10 +117,12 @@ Depending on your choices, the following schemas are available for installation.
 | `PLUGIN_FUSIONINVENTORY` | Inventory Plugin - Default: `FALSE` |
 | `PLUGIN_GPG` | Manage GPG Keys - Default: `FALSE` |
 | `PLUGIN_IPMI` | IPMI Management - Default: `FALSE` |
+| `PLUGIN_KOPANO` | Kopano - Default: `FALSE` |
 | `PLUGIN_MAIL` | Mail Attributes - Default: `TRUE` |
 | `PLUGIN_MIXEDGROUPS` | Unix/LDAP Groups - Default: `FALSE` |
 | `PLUGIN_NAGIOS` | Nagios Monitoring - Default: `FALSE` |
 | `PLUGIN_NETGROUPS` | NIS - Default: `FALSE` |
+| `PLUGIN_NEXTCLOUD` | Nextcloud - Default: `FALSE` |
 | `PLUGIN_NEWSLETTER` | Manage Newsletters - Default: `FALSE` |
 | `PLUGIN_OPSI` | Inventory - Default: `FALSE` |
 | `PLUGIN_PERSONAL` | Personal Details - Default: `TRUE` |
@@ -133,6 +135,7 @@ Depending on your choices, the following schemas are available for installation.
 | `PLUGIN_RENATER_PARTAGE` | Unknown - Default: `FALSE` |
 | `PLUGIN_REPOSITORY` | Argonaut Deployment Registry - Default: `FALSE` |
 | `PLUGIN_SAMBA` | File Sharing - Default: `FALSE` |
+| `PLUGIN_SEAFILE` | Seafile - Default: `FALSE` |
 | `PLUGIN_SOGO` | Groupware - Default: `FALSE` |
 | `PLUGIN_SPAMASSASSIN` | Anti Spam - Default: `FALSE` |
 | `PLUGIN_SQUID` | Proxy - Default: `FALSE` |

@@ -295,12 +295,14 @@ if [ ! -e ${FUSIONDIRECTORY_INSTALLED} ] || var_true $REAPPLY_PLUGIN_SCHEMAS ; t
   PLUGIN_FUSIONINVENTORY=${PLUGIN_FUSIONINVENTORY:-"FALSE"}
   PLUGIN_GPG=${PLUGIN_GPG:-"FALSE"}
   PLUGIN_IPMI=${PLUGIN_IPMI:-"FALSE"}
+  PLUGIN_NEXTCLOUD=${PLUGIN_KOPANO:-"FALSE"}
   PLUGIN_LDAPDUMP=${PLUGIN_LDAPDUMP:-"TRUE"}
   PLUGIN_LDAPMANAGER=${PLUGIN_LDAPMANAGER:-"TRUE"}
   PLUGIN_MAIL=${PLUGIN_MAIL:-"TRUE"}
   PLUGIN_MIXEDGROUPS=${PLUGIN_MIXEDGROUPS:-"TRUE"}
   PLUGIN_NAGIOS=${PLUGIN_NAGIOS:-"FALSE"}
   PLUGIN_NETGROUPS=${PLUGIN_NETGROUPS:-"FALSE"}
+  PLUGIN_NEXTCLOUD=${PLUGIN_NEXTCLOUD:-"FALSE"}
   PLUGIN_NEWSLETTER=${PLUGIN_NEWSLETTER:-"FALSE"}
   PLUGIN_OPSI=${PLUGIN_OPSI:-"FALSE"}
   PLUGIN_PERSONAL=${PLUGIN_PERSONAL:-"TRUE"}
@@ -313,6 +315,7 @@ if [ ! -e ${FUSIONDIRECTORY_INSTALLED} ] || var_true $REAPPLY_PLUGIN_SCHEMAS ; t
   PLUGIN_RENATER_PARTAGE=${PLUGIN_RENATER_PARTAGE:-"FALSE"}
   PLUGIN_REPOSITORY=${PLUGIN_REPOSITORY:-"FALSE"}
   PLUGIN_SAMBA=${PLUGIN_SAMBA:-"FALSE"}
+  PLUGIN_SEAFILE=${PLUGIN_SEAFILE:-"FALSE"}
   PLUGIN_SINAPS=${PLUGIN_SINAPS:-"FALSE"}
   PLUGIN_SOGO=${PLUGIN_SOGO:-"FALSE"}
   PLUGIN_SPAMASSASSIN=${PLUGIN_SPAMASSASSIN:-"FALSE"}
@@ -357,6 +360,7 @@ fd_apply() {
     fd_apply systems
     silent fusiondirectory-insert-schema $ARG service*.schema
     silent fusiondirectory-insert-schema $ARG systems*.schema
+    silent fusiondirectory-insert-schema $ARG dns*.schema
   fi
   if var_true $PLUGIN_AUDIT ; then
     fd_apply audit
@@ -450,6 +454,11 @@ fd_apply() {
     silent fusiondirectory-insert-schema $ARG ipmi*.schema
   fi
 
+  if var_true $PLUGIN_KOPANO ; then
+    fd_apply Kopano
+    silent fusiondirectory-insert-schema $ARG kopano*.schema
+  fi
+
   if var_true $PLUGIN_NAGIOS ; then
     fd_apply Nagios
     silent fusiondirectory-insert-schema $ARG nagios*.schema
@@ -464,6 +473,11 @@ fd_apply() {
   if var_true $PLUGIN_NEWSLETTER ; then
     fd_apply Newsletter
     silent fusiondirectory-insert-schema $ARG newsletter*.schema
+  fi
+
+  if var_true $PLUGIN_NEXTCLOUD ; then
+    fd_apply Nextcloud
+    silent fusiondirectory-insert-schema $ARG nextcloud*.schema
   fi
 
   if var_true $PLUGIN_OPSI ; then
@@ -514,6 +528,11 @@ fd_apply() {
   if var_true $PLUGIN_PUREFTPD ; then
     fd_apply PureFTPd
     silent fusiondirectory-insert-schema $ARG pureftpd*.schema
+  fi
+
+  if var_true $PLUGIN_SEAFILE ; then
+    fd_apply Seafile
+    silent fusiondirectory-insert-schema $ARG seafile*.schema
   fi
 
   if var_true $PLUGIN_SSH ; then
