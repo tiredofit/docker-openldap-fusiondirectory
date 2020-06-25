@@ -1,3 +1,9 @@
+## 7.0.1 2020-06-25 <dave at tiredofit dot ca>
+
+   ### Changed
+      - Removed functionality for READONLY user, (Use the FusionDirectory DSA Plugin instead)
+
+
 ## 7.0.0 2020-06-25 <dave at tiredofit dot ca>
 
    ### Added

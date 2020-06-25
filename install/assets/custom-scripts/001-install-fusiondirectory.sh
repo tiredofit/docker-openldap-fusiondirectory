@@ -74,19 +74,7 @@ userPassword: ${ADMIN_PASS_ENCRYPTED}
 
 EOF
 
-	if var_true $ENABLE_READONLY_USER ; then
-    	cat <<EOF >> /tmp/01-fusiondirectory-base.ldif
-
-dn: cn=${READONLY_USER_USER},${BASE_DN}
-changeType: add
-objectClass: simpleSecurityObject
-objectClass: organizationalRole
-cn: cn=${READONLY_USER_USER}
-description: LDAP read only user
-userPassword: ${READONLY_USER_PASS_ENCRYPTED}
-EOF
-	fi
-    
+  
 	silent ldapmodify -H 'ldapi:///' -D "cn=admin,${BASE_DN}" -w $ADMIN_PASS -f /tmp/01-fusiondirectory-base.ldif
 
     ### Step 2
