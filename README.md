@@ -66,7 +66,7 @@ Start openldap-fusiondirectory using:
 ```bash
 docker-compose up
 ```
-__NOTE__: Please allow up to 1 minutes for the application to start.
+__NOTE__: Please allow up to 3 minutes for the application to start.
 
 
 ## Data-Volumes
@@ -108,7 +108,7 @@ Depending on your choices, the following schemas are available for installation.
 | `PLUGIN_DEBCONF` | Argonaut Debconf - Default: `FALSE` |
 | `PLUGIN_DEVELOPERS` | Developers Plugin - Default: `FALSE` |
 | `PLUGIN_DHCP` | Manage DHCP - Default: `FALSE` |
-| `PLUGIN_DNS` | Manage DNS - Default: `FALSE` |
+| `PLUGIN_DNS` | Manage DNS - Default: `TRUE` |
 | `PLUGIN_DOVECOT` | Dovecot IMAP - Default: `FALSE` |
 | `PLUGIN_DSA` | System Accounts - Default: `TRUE` |
 | `PLUGIN_EJBCA` | Unknown - Default: `FALSE` |
@@ -162,6 +162,8 @@ For debugging and maintenance purposes you may want access the containers shell.
 ```bash
 docker exec -it openldap-fusiondirectory bash
 ```
+
+If you are experiencing issues with adding users prompted by an error with a password policy, enter the container and type `fix-ppolicy`
 
 # References
 

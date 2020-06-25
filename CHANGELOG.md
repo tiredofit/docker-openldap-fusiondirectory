@@ -1,3 +1,12 @@
+## 7.0.0 2020-06-25 <dave at tiredofit dot ca>
+
+   ### Added
+      - Match version number to tiredofit/openldap release
+
+   ### Changed
+      - Alter ppolicy routines
+
+
 ## 6.7.0 2020-06-20 <dave at tiredofit dot ca>
 
    ### Added

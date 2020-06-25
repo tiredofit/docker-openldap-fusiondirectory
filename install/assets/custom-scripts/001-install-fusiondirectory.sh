@@ -46,31 +46,11 @@ if [ ! -e ${FUSIONDIRECTORY_INSTALLED} ]; then
 	UID_FD_ADMIN="uid=${FUSIONDIRECTORY_ADMIN_USER},${BASE_DN}"
 	UID_FD_ADMIN_BS64=$(echo -n ${UID_FD_ADMIN} | base64 | tr -d '\n')
 
-	### Step 1
-	if var_true $ENABLE_READONLY_USER ; then
-	    cat <<EOF >> /tmp/01-fusiondirectory-delete.ldif
-dn: cn=${READONLY_USER_USER},${BASE_DN}
-changetype: delete
-
-EOF
-	fi
-
-	cat <<EOF >> /tmp/01-fusiondirectory-delete.ldif
-dn: cn=admin,${BASE_DN}
-changetype: delete
-
-dn: ${BASE_DN}
-changetype: delete
-
-EOF
-
-	silent ldapmodify -H 'ldapi:///' -D "cn=admin,$BASE_DN" -w $ADMIN_PASS -f /tmp/01-fusiondirectory-delete.ldif
-	
 	### Install Core Fusion Directory Schemas
 	silent fusiondirectory-insert-schema
 
-    ### Step 2
-	cat <<EOF > /tmp/02-fusiondirectory-base.ldif
+    ### Step 1
+	cat <<EOF > /tmp/01-fusiondirectory-base.ldif
 dn: ${BASE_DN}
 changeType: add
 o: ${ORGANIZATION}
@@ -95,7 +75,7 @@ userPassword: ${ADMIN_PASS_ENCRYPTED}
 EOF
 
 	if var_true $ENABLE_READONLY_USER ; then
-    	cat <<EOF >> /tmp/02-fusiondirectory-base.ldif
+    	cat <<EOF >> /tmp/01-fusiondirectory-base.ldif
 
 dn: cn=${READONLY_USER_USER},${BASE_DN}
 changeType: add
@@ -107,10 +87,10 @@ userPassword: ${READONLY_USER_PASS_ENCRYPTED}
 EOF
 	fi
     
-	silent ldapmodify -H 'ldapi:///' -D "cn=admin,${BASE_DN}" -w $ADMIN_PASS -f /tmp/02-fusiondirectory-base.ldif
+	silent ldapmodify -H 'ldapi:///' -D "cn=admin,${BASE_DN}" -w $ADMIN_PASS -f /tmp/01-fusiondirectory-base.ldif
 
-    ### Step 3
-	cat <<EOF > /tmp/03-fusiondirectory-add.ldif
+    ### Step 2
+	cat <<EOF > /tmp/02-fusiondirectory-add.ldif
 dn: uid=${FUSIONDIRECTORY_ADMIN_USER},${BASE_DN}
 changeType: add
 objectClass: inetOrgPerson
@@ -248,28 +228,18 @@ objectClass: organizationalUnit
 ou: snapshots
 EOF
 
-	silent ldapadd -H 'ldapi:///' -D "cn=admin,${BASE_DN}" -w $ADMIN_PASS -f /tmp/03-fusiondirectory-add.ldif
+	silent ldapadd -H 'ldapi:///' -D "cn=admin,${BASE_DN}" -w $ADMIN_PASS -f /tmp/02-fusiondirectory-add.ldif
 
 ### Step 4
-	cat <<EOF > /tmp/04-fusiondirectory-ppolicy.ldif
-dn: cn=module{0},cn=config
-changetype: modify
-add: olcModuleLoad
-olcModuleLoad: ppolicy
-
-dn: olcOverlay=ppolicy,olcDatabase={1}${BACKEND},cn=config
-objectClass: olcConfig
-objectClass: olcOverlayConfig
-objectClass: olcPpolicyConfig
-olcOverlay: ppolicy
-olcPPolicyDefault: cn=default,ou=ppolicies,${BASE_DN}
-olcPPolicyUseLockout: TRUE
-olcPPolicyHashCleartext: TRUE
-EOF
-
-
-	silent ldapadd -Y EXTERNAL -H 'ldapi:///' -Q -f /tmp/04-fusiondirectory-ppolicy.ldif
-  rm -rf /tmp/*.ldif
+  print_notice "Adding ppolicy defaults"
+  sed -i "s|<BASE_DN>|${BASE_DN}|g" /assets/slapd/config/ppolicy/01-ppolicy-config.ldif
+  sed -i "s|<BASE_DN>|${BASE_DN}|g" /assets/slapd/config/ppolicy/02-ppolicy-ou.ldif
+  sed -i "s|<BASE_DN>|${BASE_DN}|g" /assets/slapd/config/ppolicy/03-ppolicy-default.ldif
+  silent ldapadd -Y EXTERNAL -Q -H ldapi:/// -f /assets/slapd/config/ppolicy/01-ppolicy-config.ldif
+  silent ldapadd -H 'ldapi:///' -D "cn=admin,${BASE_DN}" -w $ADMIN_PASS -f /assets/slapd/config/ppolicy/02-ppolicy-ou.ldif
+  silent ldapadd -H 'ldapi:///' -D "cn=admin,${BASE_DN}" -w $ADMIN_PASS -f /assets/slapd/config/ppolicy/03-ppolicy-default.ldif
+###
+  #rm -rf /tmp/*.ldif
 fi
 
 ### Insert Plugin Schemas
@@ -286,7 +256,7 @@ if [ ! -e ${FUSIONDIRECTORY_INSTALLED} ] || var_true $REAPPLY_PLUGIN_SCHEMAS ; t
   PLUGIN_DEBCONF=${PLUGIN_DEBCONF:-"FALSE"}
   PLUGIN_DEVELOPERS=${PLUGIN_DEVELOPERS:-"FALSE"}
   PLUGIN_DHCP=${PLUGIN_DHCP:-"FALSE"}
-  PLUGIN_DNS=${PLUGIN_DNS:-"FALSE"}
+  PLUGIN_DNS=${PLUGIN_DNS:-"TRUE"}
   PLUGIN_DOVECOT=${PLUGIN_DOVECOT:-"FALSE"}
   PLUGIN_DSA=${PLUGIN_DSA:-"TRUE"}
   PLUGIN_EJBCA=${PLUGIN_EJBCA:-"FALSE"}
