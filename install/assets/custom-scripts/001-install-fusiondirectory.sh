@@ -82,7 +82,7 @@ EOF
     ldapmodify -H 'ldapi:///' -f /assets/slapd/config/bootstrap/ldif/readonly-user/readonly-user-acl.ldif
   fi
   
-    ### Step 2
+  ### Step 2
 	cat <<EOF > /tmp/02-fusiondirectory-add.ldif
 dn: uid=${FUSIONDIRECTORY_ADMIN_USER},${BASE_DN}
 changeType: add
@@ -232,7 +232,7 @@ EOF
   silent ldapadd -H 'ldapi:///' -D "cn=admin,${BASE_DN}" -w $ADMIN_PASS -f /assets/slapd/config/ppolicy/02-ppolicy-ou.ldif
   silent ldapadd -H 'ldapi:///' -D "cn=admin,${BASE_DN}" -w $ADMIN_PASS -f /assets/slapd/config/ppolicy/03-ppolicy-default.ldif
 ###
-  #rm -rf /tmp/*.ldif
+  rm -rf /tmp/*.ldif
 fi
 
 ### Insert Plugin Schemas

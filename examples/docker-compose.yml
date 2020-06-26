@@ -25,12 +25,11 @@ services:
       - FUSIONDIRECTORY_ADMIN_PASS=admin
       - ORGANIZATION=Example Organization
       
-      
       - ENABLE_READONLY_USER=FALSE
       - READONLY_USER_USER=reader
       - READONLY_USER_PASS=reader
 
-      - ENABLE_TLS=true
+      - ENABLE_TLS=TRUE
       - TLS_CRT_FILENAME=cert.pem
       - TLS_KEY_FILENAME=key.pem
       - TLS_ENFORCE=FALSE
@@ -57,4 +56,4 @@ services:
 
 networks:
   services:
-    external: true
+    external: TRUE
