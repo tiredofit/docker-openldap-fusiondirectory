@@ -6,7 +6,7 @@
 [![Docker 
 Layers](https://images.microbadger.com/badges/image/tiredofit/openldap-fusiondirectory.svg)](https://microbadger.com/images/tiredofit/openldap-fusiondirectory)
 
-# Introduction
+## Introduction
 
 Dockerfile to build a [OpenLDAP Server](https://sourceforge.net/projects/openldap-fusiondirectory/) with [Fusion Directory](https://www.fusiondirectory.org) Schema's Included.
 It includes all the functions in the [OpenLDAP Image](https://github.com/tiredofit/docker-openldap) such as Multi-Master Replication, TLS, and other features.
@@ -16,11 +16,11 @@ This Container uses [tiredofit/openldap](https://github.com/tiredofit/docker-ope
 
 [Changelog](CHANGELOG.md)
 
-# Authors
+## Authors
 
 - [Dave Conroy](dave at tiredofit dot ca)
 
-# Table of Contents
+## Table of Contents
 
 - [Introduction](#introduction)
     - [Changelog](Changelog.md)
@@ -43,7 +43,7 @@ This Container uses [tiredofit/openldap](https://github.com/tiredofit/docker-ope
 
 To build this image you must have the [OpenLDAP Image](https://github.com/tiredofit/docker-openldap) built and available. To utilize, you must also have the [Fusion Directory Image](https://github.com/tiredofit/docker-fusiondirectory) image built and available.
 
-# Installation
+## Installation
 
 Automated builds of the image are available on [Registry](https://hub.docker.com/r/tiredofit/openldap-fusiondirectory) and is the recommended method of installation.
 
@@ -53,7 +53,7 @@ docker pull tiredofit/openldap-fusiondirectory
 ```
 
 
-# Quick Start
+### Quick Start
 
 * The quickest way to get started is using [docker-compose](https://docs.docker.com/compose/). See the examples folder for a working [docker-compose.yml](examples/docker-compose.yml) that can be modified for development or production use.
 
@@ -69,7 +69,7 @@ docker-compose up
 __NOTE__: Please allow up to 3 minutes for the application to start.
 
 
-## Data-Volumes
+### Data-Volumes
 
 * Please see [OpenLDAP Image](https://github.com/tiredofit/docker-openldap) for Data Volume Configuration.
 
@@ -79,7 +79,7 @@ There is an additional data volume exposed:
 |-----------|-------------|
 | `/assets/fusiondirectory-custom/` | Place Schema files here to be imported into FusionDirectory |
 
-## Environment Variables
+### Environment Variables
 
 * Please see [OpenLDAP Image](https://github.com/tiredofit/docker-openldap) for Environment Variables Configuration
 * There are specific environment variables to this image:
@@ -149,13 +149,13 @@ Depending on your choices, the following schemas are available for installation.
 | `PLUGIN_WEBLINK` | Display Weblink - Default: `FALSE` |
 
 
-## Networking
+### Networking
 
 * Please see [OpenLDAP Image](https://github.com/tiredofit/docker-openldap) for Networking Configuration
 
 
 ## Maintenance
-#### Shell Access
+### Shell Access
 
 For debugging and maintenance purposes you may want access the containers shell. 
 
@@ -165,7 +165,7 @@ docker exec -it openldap-fusiondirectory bash
 
 If you are experiencing issues with adding users prompted by an error with a password policy, enter the container and type `fix-ppolicy`
 
-# References
+## References
 
 * https://fusiondirectory.org
 * https://openldap.org

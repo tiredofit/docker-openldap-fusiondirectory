@@ -1,3 +1,9 @@
+## 7.0.3 2020-09-19 <dave at tiredofit dot ca>
+
+   ### Changed
+      - Check for REAPPLY_PLUGIN_SCHEMAS when finding custom scripts
+
+
 ## 7.0.2 2020-06-26 <dave at tiredofit dot ca>
 
    ### Added
