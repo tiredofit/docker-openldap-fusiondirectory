@@ -32,7 +32,6 @@ RUN set -x && \
     cp -R /usr/src/fusiondirectory-plugins-seafile/* /usr/src/fusiondirectory-plugins/seafile/ && \
     \
 ### Cleanup
-    \
     mkdir -p /etc/openldap/schema/fusiondirectory && \
     rm -rf /usr/src/fusiondirectory/contrib/openldap/rfc2307bis.schema && \
     cp /usr/src/fusiondirectory/contrib/bin/fusiondirectory-insert-schema /usr/sbin && \
