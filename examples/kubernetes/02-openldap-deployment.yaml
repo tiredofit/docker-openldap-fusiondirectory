@@ -1,0 +1,249 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name:  openldap-passwords
+data:
+   ADMIN_PASS:  <BASE64_PASSWORD>
+   CONFIG_PASS: <BASE64_PASSWORD>
+   FUSIONDIRECTORY_ADMIN_PASS: <BASE64_PASSWORD>
+type: Opaque
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name:  openldap-readonly-password
+data:
+   secretKey:  BASE64_READONLY_PASSWORD
+type: Opaque
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: openldap-headless
+  labels:
+    app: openldap
+    ver: v1
+spec:
+  clusterIP: none
+  ports:
+  - port: 636
+    name: ldaps
+  - port: 389
+    name: ldap  
+  selector:
+    app: openldap
+    ver: v1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: openldap-writer
+  labels:
+    app: openldap-writer
+    ver: v1
+spec:
+  ports:
+  - port: 389
+    name: ldap
+  - port: 636
+    name: ldaps
+  selector:
+    statefulset.kubernetes.io/pod-name: openldap-0
+    ver: v1    
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: openldap
+    ver: v1
+  name: openldap
+spec:
+  replicas: 2
+  serviceName: openldap-headless
+  selector:
+    matchLabels:
+      app: openldap
+      ver: v1
+  volumeClaimTemplates:
+      - metadata:
+          name: openldap-data
+        spec:
+          accessModes: [ "ReadWriteOnce" ]
+          storageClassName: "csi-rbd-sc"
+          resources:
+            requests:
+              storage: 500Mi
+      - metadata:
+          name: openldap-config
+        spec:
+          accessModes: [ "ReadWriteOnce" ]
+          storageClassName: "csi-rbd-sc"
+          resources:
+            requests:
+              storage: 500Mi
+  template:
+    metadata:
+      labels:
+        app: openldap
+        ver: v1
+    spec:
+      volumes:
+      - name: openldap-certs
+        secret:
+          secretName: openldap-certs
+
+      containers:
+      - image: tiredofit/openldap-fusiondirectory:7.0.3
+        imagePullPolicy: IfNotPresent
+        name: openldap
+        volumeMounts:
+        - mountPath: /var/lib/openldap
+          name: openldap-data
+        - mountPath: /etc/openldap/slapd.d
+          name: openldap-config
+        - mountPath: /certs/
+          name: openldap-certs
+        env:
+
+        # Container ############################################
+        - name: ENABLE_CRON
+          value: "TRUE"
+        - name: ENABLE_ZABBIX
+          value: "FALSE"
+        - name: CONTAINER_LOG_LEVEL
+          value: "NOTICE"
+        - name: DEBUG_MODE
+          value: "FALSE"
+
+        # Settings ###############################################
+        - name: INTERNAL_HOSTNAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: HOSTNAME
+          #TODO Setting the fqdn automatically
+          value: "$(INTERNAL_HOSTNAME).openldap-headless.default.svc.cluster.local"
+        - name: BACKEND
+          value: "mdb"
+        - name: ULIMIT_N
+          value: "21000"
+        - name: LOG_LEVEL
+          value: "256"
+        - name: DOMAIN
+          value: "example.net"
+        - name: ADMIN_PASS
+          valueFrom:
+            secretKeyRef:
+              name:   openldap-passwords
+              key: ADMIN_PASS
+        - name: CONFIG_PASS
+          valueFrom:
+            secretKeyRef:
+              name:   openldap-passwords
+              key: CONFIG_PASS
+        - name: KEEP_EXISTING_CONFIG
+          value: "FALSE"
+
+        # FUSIONDIRECTORY ACCESS #################################
+        - name: FUSIONDIRECTORY_ADMIN_USER
+          value: "manager"
+        - name: FUSIONDIRECTORY_ADMIN_PASS
+          valueFrom:
+            secretKeyRef:
+              name:   openldap-passwords
+              key: FUSIONDIRECTORY_ADMIN_PASS
+        - name: ORGANIZATION
+          value: "example"
+
+        # LDAP Settings ##########################################
+        - name: BASE_DN
+          value: "dc=example,dc=net"
+        - name: ENABLE_READONLY_USER
+          value: "TRUE"
+        - name: READONLY_USER_USER
+          value: "reader"
+        - name: READONLY_USER_PASS
+          valueFrom:
+            secretKeyRef:
+              name: openldap-readonly-password
+              key: secretKey
+        # TLS ######################################################
+        - name: ENABLE_TLS
+          value: "TRUE"
+        - name: TLS_ENFORCE
+          value: "FALSE"
+
+          # Filenames have to fit the names inside the Secret openldap-certs 
+        - name: TLS_CREATE_CA
+          value: "FALSE"
+        - name: TLS_CA_CRT_FILENAME
+          value: "root-ca.cert.pem"
+        - name : TLS_CA_CRT_PATH
+          value: "/certs/"
+
+        - name: TLS_CRT_FILENAME
+          value: "$(INTERNAL_HOSTNAME).openldap.cert.pem"
+        - name: TLS_KEY_FILENAME
+          value: "$(INTERNAL_HOSTNAME).openldap.key"
+
+
+        - name: TLS_CIPHER_SUITE
+          value: "ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:RSA+AESGCM:RSA+AES:-DHE-DSS:-RSA:!aNULL:!MD5:!DSS:!SHA"
+        - name: TLS_VERIFY_CLIENT
+          value: "never"
+        
+        # Is mounted through a configmap
+        - name: TLS_RESET_PERMISSIONS
+          value: "FALSE"
+        
+        - name: SSL_HELPER_PREFIX
+          value: "ldap"
+
+        # REPLICATION ##############################################
+        - name: ENABLE_REPLICATION
+          value: "TRUE"
+
+          # Replication without tls tls_reqcert=never
+        - name: REPLICATION_CONFIG_SYNCPROV
+          value: "binddn=\"cn=config\" bindmethod=simple credentials=$(CONFIG_PASS) searchbase=\"cn=config\" type=refreshAndPersist retry=\"5 5 60 +\" timeout=1 filter=\"(!(objectclass=olcGlobal))\" tls_reqcert=never"
+          # Replication without tls tls_reqcert=never
+        - name: REPLICATION_DB_SYNCPROV
+          value: "binddn=\"cn=admin,$(BASE_DN)\" bindmethod=simple credentials=$(ADMIN_PASS) searchbase=\"$(BASE_DN)\" type=refreshAndPersist interval=00:00:00:10 retry=\"60 +\" timeout=1 tls_reqcert=never"
+
+        #TODO  Scaling of the Statefulset won't work -> olcServerID in the config database has to be changed!
+        # Please use the correct fqdn 
+        - name: REPLICATION_HOSTS
+          value: "ldap://openldap-0.openldap-headless.default.svc.cluster.local ldap://openldap-1.openldap-headless.default.svc.cluster.local"
+
+        - name: REMOVE_CONFIG_AFTER_SETUP
+          value: "FALSE"
+
+        # ZABBIX #################################################
+        - name: ZABBIX_HOSTNAME
+          value: "openldap-fusiondirectory-app"
+
+        - name: REAPPLY_PLUGIN_SCHEMAS
+          value: "FALSE"
+        - name: PLUGIN_ARGONAUT
+          value: "TRUE"
+        - name: PLUGIN_MAIL
+          value: "TRUE"
+        - name: PLUGIN_ALIAS
+          value: "TRUE"
+        - name: PLUGIN_PERSONAL
+          value: "TRUE"
+        - name: PLUGIN_POSIX
+          value: "TRUE"
+        - name: PLUGIN_DNS
+          value: "TRUE"
+        - name: PLUGIN_SUDO
+          value: "TRUE"
+        - name: PLUGIN_SYSTEMS
+          value: "TRUE"
+
+        ports:
+        - containerPort: 389
+        - containerPort: 636
+
+      restartPolicy: Always
