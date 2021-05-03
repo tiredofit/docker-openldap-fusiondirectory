@@ -1,10 +1,10 @@
 # github.com/tiredofit/docker-openldap-fusiondirectory
 
 
-[![GitHub release](https://img.shields.io/github/v/tag/tiredofit/docker-openldap?style=flat-square)](https://github.com/tiredofit/docker-openldap/releases/latest)
-[![Build Status](https://img.shields.io/github/workflow/status/tiredofit/docker-openldap/build?style=flat-square)](https://github.com/tiredofit/docker-openldap/actions?query=workflow%3Abuild)
-[![Docker Stars](https://img.shields.io/docker/stars/tiredofit/openldap.svg?style=flat-square&logo=docker)](https://hub.docker.com/r/tiredofit/openldap/)
-[![Docker Pulls](https://img.shields.io/docker/pulls/tiredofit/openldap.svg?style=flat-square&logo=docker)](https://hub.docker.com/r/tiredofit/openldap/)
+[![GitHub release](https://img.shields.io/github/v/tag/tiredofit/docker-openldap-fusiondirectory?style=flat-square)](https://github.com/tiredofit/docker-openldap-fusiondirectory/releases/latest)
+[![Build Status](https://img.shields.io/github/workflow/status/tiredofit/docker-openldap-fusiondirectory/build?style=flat-square)](https://github.com/tiredofit/docker-openldap-fusiondirectory/actions?query=workflow%3Abuild)
+[![Docker Stars](https://img.shields.io/docker/stars/tiredofit/openldap-fusiondirectory.svg?style=flat-square&logo=docker)](https://hub.docker.com/r/tiredofit/openldap-fusiondirectory/)
+[![Docker Pulls](https://img.shields.io/docker/pulls/tiredofit/openldap-fusiondirectory.svg?style=flat-square&logo=docker)](https://hub.docker.com/r/tiredofit/openldap-fusiondirectory/)
 [![Become a sponsor](https://img.shields.io/badge/sponsor-tiredofit-181717.svg?logo=github&style=flat-square)](https://github.com/sponsors/tiredofit)
 [![Paypal Donate](https://img.shields.io/badge/donate-paypal-00457c.svg?logo=paypal&style=flat-square)](https://www.paypal.me/tiredofit)
 
@@ -43,10 +43,10 @@ This will build a Docker image for an [OpenLDAP Server](https://sourceforge.net/
 Clone this repository and build the image with `docker build -t (imagename) .`
 
 ### Prebuilt Images
-Builds of the image are available on [Docker Hub](https://hub.docker.com/r/tiredofit/openldap) and is the recommended method of installation.
+Builds of the image are available on [Docker Hub](https://hub.docker.com/r/tiredofit/openldap-fusiondirectory) and is the recommended method of installation.
 
 ```bash
-docker pull tiredofit/openldap:(imagetag)
+docker pull tiredofit/openldap-fusiondirectory:(imagetag)
 ```
 The following image tags are available along with their taged release based on what's written in the [Changelog](CHANGELOG.md):
 
@@ -78,16 +78,6 @@ There is an additional data volume exposed:
 | --------------------------------- | ----------------------------------------------------------- |
 | `/assets/fusiondirectory-custom/` | Place Schema files here to be imported into FusionDirectory |
 
-## Installation
-
-Automated builds of the image are available on [Registry](https://hub.docker.com/r/tiredofit/openldap-fusiondirectory) and is the recommended method of installation.
-
-
-```bash
-docker pull tiredofit/openldap-fusiondirectory
-```
-
-
 ### Quick Start
 
 * The quickest way to get started is using [docker-compose](https://docs.docker.com/compose/). See the examples folder for a working [docker-compose.yml](examples/docker-compose.yml) that can be modified for development or production use.
@@ -114,7 +104,7 @@ __NOTE__: Please allow up to 3 minutes for the application to start.
 
 ### Environment Variables
 
-This image relies on an [Alpine Linux](https://hub.docker.com/r/tiredofit/alpine) or [Debian Linux](https://hub.docker.com/r/tiredofit/debian) base image that relies on an [init system](https://github.com/just-containers/s6-overlay) for added capabilities. Outgoing SMTP capabilities are handlded via `msmtp`. Individual container performance monitoring is performed by [zabbix-agent](https://zabbix.org). Additional tools include: `bash`,`curl`,`less`,`logrotate`,`nano`,`vim`.
+This image relies on an [Alpine Linux](https://hub.docker.com/r/tiredofit/alpine) base image that relies on an [init system](https://github.com/just-containers/s6-overlay) for added capabilities. Outgoing SMTP capabilities are handlded via `msmtp`. Individual container performance monitoring is performed by [zabbix-agent](https://zabbix.org). Additional tools include: `bash`,`curl`,`less`,`logrotate`,`nano`,`vim`.
 
 Be sure to view the following repositories to understand all the customizable options:
 
@@ -225,4 +215,3 @@ MIT. See [LICENSE](LICENSE) for more details.
 
 * https://fusiondirectory.org
 * https://openldap.org
-
