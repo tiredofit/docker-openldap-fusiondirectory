@@ -1,11 +1,11 @@
-# hub.docker.com/r/tiredofit/openldap-fusiondirectory
+# github.com/tiredofit/docker-openldap-fusiondirectory
 
 [![Docker Pulls](https://img.shields.io/docker/pulls/tiredofit/openldap-fusiondirectory.svg)](https://hub.docker.com/r/tiredofit/openldap-fusiondirectory)
 [![Docker Stars](https://img.shields.io/docker/stars/tiredofit/openldap-fusiondirectory.svg)](https://hub.docker.com/r/tiredofit/openldap-fusiondirectory)
 [![Docker 
 Layers](https://images.microbadger.com/badges/image/tiredofit/openldap-fusiondirectory.svg)](https://microbadger.com/images/tiredofit/openldap-fusiondirectory)
 
-## Introduction
+## About
 
 Dockerfile to build a [OpenLDAP Server](https://sourceforge.net/projects/openldap-fusiondirectory/) with [Fusion Directory](https://www.fusiondirectory.org) Schema's Included.
 It includes all the functions in the [OpenLDAP Image](https://github.com/tiredofit/docker-openldap) such as Multi-Master Replication, TLS, and other features.
@@ -15,7 +15,7 @@ This Container uses [tiredofit/openldap](https://github.com/tiredofit/docker-ope
 
 [Changelog](CHANGELOG.md)
 
-## Authors
+## Maintainer
 
 - [Dave Conroy](dave at tiredofit dot ca)
 
@@ -68,7 +68,7 @@ docker-compose up
 __NOTE__: Please allow up to 3 minutes for the application to start.
 
 
-### Data-Volumes
+### Persistent Storage
 
 * Please see [OpenLDAP Image](https://github.com/tiredofit/docker-openldap) for Data Volume Configuration.
 
