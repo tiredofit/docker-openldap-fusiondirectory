@@ -1,13 +1,13 @@
-### Application Level Image CI
-### Dave Conroy <dave at tiredofit dot ca>
+# Manual Workflow (Application)
 
-name: 'build'
+name: manual
 
 on:
-  push:
-    paths:
-    - '**'
-    - '!README.md'
+  workflow_dispatch:
+    inputs:
+      Manual Build:
+        description: 'Manual Build'
+        required: false
 jobs:
   docker:
     runs-on: ubuntu-latest
@@ -85,7 +85,7 @@ jobs:
             sed -i "/FROM .*/a LABEL tiredofit.image.git_repository=\"https://github.com/${GITHUB_REPOSITORY}\"" Dockerfile
             sed -i "/FROM .*/a LABEL tiredofit.image.git_commit=\"${GITHUB_SHA}\"" Dockerfile
             sed -i "/FROM .*/a LABEL tiredofit.image.git_committed_by=\"${GITHUB_ACTOR}\"" Dockerfile
-            sed -i "/FROM .*/a LABEL tiredofit.image.image_build_date=\"$(date +'%Y-%m-%d %H:%M:%S')\"" Dockerfile
+            sed -i "/FROM .*/a LABEL tiredofit.image_build_date=\"$(date +'%Y-%m-%d %H:%M:%S')\"" Dockerfile
             if [ -f "CHANGELOG.md" ] ; then
               sed -i "/FROM .*/a LABEL tiredofit.image.git_changelog_version=\"$(head -n1 ./CHANGELOG.md | awk '{print $2}')\"" Dockerfile
             fi
