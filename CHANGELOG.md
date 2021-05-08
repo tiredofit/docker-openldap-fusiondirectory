@@ -1,3 +1,9 @@
+## 7.0.4 2021-05-08 <dave at tiredofit dot ca>
+
+   ### Added
+      - Track tiredofit/openldap version 7.1.16
+
+
 ## 7.0.3 2020-09-19 <dave at tiredofit dot ca>
 
    ### Changed
