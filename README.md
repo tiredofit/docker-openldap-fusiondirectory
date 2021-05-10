@@ -19,19 +19,29 @@ This will build a Docker image for an [OpenLDAP Server](https://sourceforge.net/
 
 ## Table of Contents
 
-- [Introduction](#introduction)
-    - [Changelog](Changelog.md)
-- [Prerequisites](#prerequisites)
-- [Dependencies](#dependendcies)
+- [About](#about)
+- [Maintainer](#maintainer)
+- [Table of Contents](#table-of-contents)
 - [Installation](#installation)
-- [Quick Start](#quick-start)
+  - [Build from Source](#build-from-source)
+  - [Prebuilt Images](#prebuilt-images)
+  - [Multi Archictecture](#multi-archictecture)
 - [Configuration](#configuration)
-    - [Data Volumes](#data-volumes)
-    - [Database](#database)
-    - [Environment Variables](#environmentvariables)
-    - [Networking](#networking)
+  - [Quick Start](#quick-start)
+  - [Persistent Storage](#persistent-storage)
+  - [Quick Start](#quick-start-1)
+  - [Persistent Storage](#persistent-storage-1)
+  - [Environment Variables](#environment-variables)
+- [Schema Installation](#schema-installation)
+  - [Networking](#networking)
 - [Maintenance](#maintenance)
-    - [Shell Access](#shell-access)
+  - [Shell Access](#shell-access)
+- [Support](#support)
+  - [Usage](#usage)
+  - [Bugfixes](#bugfixes)
+  - [Feature Requests](#feature-requests)
+  - [Updates](#updates)
+- [License](#license)
 - [References](#references)
 
 # Dependencies
@@ -52,7 +62,8 @@ The following image tags are available along with their tagged release based on 
 
 | Version | Container OS | Tag       |
 | ------- | ------------ | --------- |
-| latest  | Alpine       | `:latest` |
+| 1.3     | Alpine       | `:latest` |
+| 1.4-dev | Alpine       | `:1.4`    |
 
 ### Multi Archictecture
 Images are built primarily for `amd64` architecture, and may also include builds for `arm/v6`, `arm/v7`, `arm64` and others. These variants are all unsupported. Consider [sponsoring](https://github.com/sponsors/tiredofit) my work so that I can work with various hardware. To see if this image supports multiple architecures, type `docker manifest (image):(tag)`
