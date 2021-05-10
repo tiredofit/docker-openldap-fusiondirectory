@@ -1,3 +1,9 @@
+## 7.1.0 2021-05-10 <dave at tiredofit dot ca>
+
+   ### Added
+      - FusionDirectory 1.4-dev schemas
+
+
 ## 7.0.4 2021-05-08 <dave at tiredofit dot ca>
 
    ### Added

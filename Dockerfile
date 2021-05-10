@@ -2,7 +2,8 @@ FROM tiredofit/openldap:7.1.16
 LABEL maintainer="Dave Conroy (dave at tiredofit dot ca)"
 
 ## Set Environment Varialbes
-ENV FUSIONDIRECTORY_VERSION=1.3 \
+ENV FUSIONDIRECTORY_VERSION=1.4-dev \
+    FUSIONDIRECTORY_PLUGINS_VERSION=1.4-dev \
     SCHEMA2LDIF_VERSION=1.3
 
 ## Install Schema2LDIF
@@ -16,8 +17,12 @@ RUN set -x && \
     \
 ## Install FusionDirectory
     mkdir -p /usr/src/fusiondirectory /usr/src/fusiondirectory-plugins && \
-    curl https://repos.fusiondirectory.org/sources/fusiondirectory/fusiondirectory-${FUSIONDIRECTORY_VERSION}.tar.gz | tar xvfz - --strip 1 -C /usr/src/fusiondirectory && \
-    curl https://repos.fusiondirectory.org/sources/fusiondirectory/fusiondirectory-plugins-${FUSIONDIRECTORY_VERSION}.tar.gz | tar xvfz - --strip 1 -C /usr/src/fusiondirectory-plugins && \
+    git clone https://gitlab.fusiondirectory.org/fusiondirectory/fd/ /usr/src/fusiondirectory && \
+    cd /usr/src/fusiondirectory && \
+    git checkout ${FUSIONDIRECTORY_VERSION} && \
+    git clone https://gitlab.fusiondirectory.org/fusiondirectory/fd-plugins/ /usr/src/fusiondirectory-plugins && \
+    cd /usr/src/fusiondirectory-plugins && \
+    git checkout ${FUSIONDIRECTORY_PLUGINS_VERSION} && \
     \
     ## Install Extra FusionDirectory Plugins
     git clone https://github.com/tiredofit/fusiondirectory-plugin-kopano /usr/src/fusiondirectory-plugin-kopano && \
