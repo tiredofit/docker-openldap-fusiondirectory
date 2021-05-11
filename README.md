@@ -65,25 +65,6 @@ Images are built primarily for `amd64` architecture, and may also include builds
 
 * Set various [environment variables](#environment-variables) to understand the capabilities of this image.
 * Map [persistent storage](#data-volumes) for access to configuration and data files for backup.
-* Make [networking ports](#networking) available for public access if necessary
-__NOTE__: Please allow up to 2 minutes for the application to start for the first time if you are generating self signed TLS certificates.
-
-### Persistent Storage
-
-* Please see [OpenLDAP Image](https://github.com/tiredofit/docker-openldap) for Data Volume Configuration.
-
-There is an additional data volume exposed:
-
-| Directory                         | Description                                                 |
-| --------------------------------- | ----------------------------------------------------------- |
-| `/assets/fusiondirectory-custom/` | Place Schema files here to be imported into FusionDirectory |
-
-### Quick Start
-
-* The quickest way to get started is using [docker-compose](https://docs.docker.com/compose/). See the examples folder for a working [docker-compose.yml](examples/docker-compose.yml) that can be modified for development or production use.
-
-* Set various [environment variables](#environment-variables) to understand the capabilities of this image.
-* Map [persistent storage](#data-volumes) for access to configuration and data files for backup.
 * Map [Network Ports](#networking) to allow external access.
 
 Start openldap-fusiondirectory using:
