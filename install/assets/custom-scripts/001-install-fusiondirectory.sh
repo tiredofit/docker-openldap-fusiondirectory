@@ -347,7 +347,7 @@ fd_apply() {
     silent fusiondirectory-insert-schema $ARG autofs-fd-conf.schema
   fi
 
-  if var_true "${PLUGIN_AUTOFS5" ; then
+  if var_true "${PLUGIN_AUTOFS5}" ; then
     fd_apply AutoFS
     silent fusiondirectory-insert-schema $ARG autofs5*.schema
   fi

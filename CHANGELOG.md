@@ -1,3 +1,9 @@
+## 7.1.1 2021-05-11 <dave at tiredofit dot ca>
+
+   ### Changed
+      - Fix for Install schema script
+
+
 ## 7.1.0 2021-05-10 <dave at tiredofit dot ca>
 
    ### Added
