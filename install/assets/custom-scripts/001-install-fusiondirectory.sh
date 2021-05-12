@@ -24,7 +24,7 @@ if [ ! -e ${FUSIONDIRECTORY_INSTALLED} ]; then
 	ROOT=""
 
 	for elem in "${domain_elems[@]}" ; do
-	    if [ "x${SUFFIX}" = x ]}" ; then
+	    if [ "x${SUFFIX}" =  x ] ; then
 	        SUFFIX="dc=${elem}"
           BASE_DN="${SUFFIX}"
 	        ROOT="${elem}"
@@ -34,17 +34,17 @@ if [ ! -e ${FUSIONDIRECTORY_INSTALLED} ]; then
 	done
 
 	CN_ADMIN="cn=admin,ou=aclroles,${BASE_DN}"
-	CN_ADMIN_BS64=$(echo -n ${CN_ADMIN} | base64 | tr -d '\n')
+	CN_ADMIN_BS64=$(echo -n "${CN_ADMIN}" | base64 | tr -d '\n')
 	FUSIONDIRECTORY_ADMIN_USER=${FUSIONDIRECTORY_ADMIN_USER:-fd-admin}
   file_env "FUSIONDIRECTORY_ADMIN_PASS" "admin"
   file_env "ADMIN_PASS"
-	ADMIN_PASS_ENCRYPTED=$(slappasswd -s $ADMIN_PASS)
-  FUSIONDIRECTORY_ADMIN_PASS_ENCRYPTED=$(slappasswd -s $FUSIONDIRECTORY_ADMIN_PASS)
+	ADMIN_PASS_ENCRYPTED=$(slappasswd -s "$ADMIN_PASS")
+  FUSIONDIRECTORY_ADMIN_PASS_ENCRYPTED=$(slappasswd -s "$FUSIONDIRECTORY_ADMIN_PASS")
   file_env "READONLY_USER_PASS"
-  READONLY_USER_PASS_ENCRYPTED=$(slappasswd -s $READONLY_USER_PASS)
+  READONLY_USER_PASS_ENCRYPTED=$(slappasswd -s "$READONLY_USER_PASS")
   ORGANIZATION=${ORGANIZATION:-Example Organization}
 	UID_FD_ADMIN="uid=${FUSIONDIRECTORY_ADMIN_USER},${BASE_DN}"
-	UID_FD_ADMIN_BS64=$(echo -n ${UID_FD_ADMIN} | base64 | tr -d '\n')
+	UID_FD_ADMIN_BS64=$(echo -n "${UID_FD_ADMIN}" | base64 | tr -d '\n')
 
 	### Install Core Fusion Directory Schemas
 	silent fusiondirectory-insert-schema
@@ -76,7 +76,7 @@ EOF
 	silent ldapmodify -H 'ldapi:///' -D "cn=admin,${BASE_DN}" -w ${ADMIN_PASS} -f /tmp/01-fusiondirectory-base.ldif
 
   # Read only user
-  if var_true "${ENABLE_READONLY_USER; then
+  if var_true "${ENABLE_READONLY_USER}" ; then
     print_notice "Adding read only (DSA) user"
     ldapadd -H 'ldapi:///' -D "cn=admin,${BASE_DN}" -w $ADMIN_PASS -f /assets/slapd/config/bootstrap/ldif/readonly-user/readonly-user.ldif
     ldapmodify -H 'ldapi:///' -f /assets/slapd/config/bootstrap/ldif/readonly-user/readonly-user-acl.ldif
@@ -236,7 +236,7 @@ EOF
 fi
 
 ### Insert Plugin Schemas
-if [ ! -e ${FUSIONDIRECTORY_INSTALLED} ] || var_true $REAPPLY_PLUGIN_SCHEMAS}" ; then
+if [ ! -e "${FUSIONDIRECTORY_INSTALLED}" ] || var_true "${REAPPLY_PLUGIN_SCHEMAS}" ; then
   ### Determine which plugins we want installed
   PLUGIN_ALIAS=${PLUGIN_ALIAS:-"FALSE"}
   PLUGIN_APPLICATIONS=${PLUGIN_APPLICATIONS:-"FALSE"}
@@ -314,7 +314,7 @@ fd_apply() {
   	A="A"
   	ARG="-i"
   fi
-  print_notice "${RE}${A}pplying Fusion Directory "$@" schema"
+  print_notice "${RE}${A}pplying Fusion Directory $@ schema"
 }
 
 ## Handle the core plugins
@@ -337,6 +337,7 @@ fd_apply() {
     silent fusiondirectory-insert-schema $ARG systems*.schema
     silent fusiondirectory-insert-schema $ARG dns*.schema
   fi
+
   if var_true "${PLUGIN_AUDIT}" ; then
     fd_apply audit
     silent fusiondirectory-insert-schema $ARG audit*.schema
@@ -344,12 +345,12 @@ fd_apply() {
 
   if var_true "${PLUGIN_AUTOFS}" ; then
     fd_apply AutoFS
-    silent fusiondirectory-insert-schema $ARG autofs-fd-conf.schema
+    silent fusiondirectory-insert-schema $ARG autofs-*.schema
   fi
 
   if var_true "${PLUGIN_AUTOFS5}" ; then
     fd_apply AutoFS
-    silent fusiondirectory-insert-schema $ARG autofs5*.schema
+    silent fusiondirectory-insert-schema $ARG autofs5-*.schema
   fi
 
   if var_true "${PLUGIN_ALIAS}" ; then
@@ -627,6 +628,6 @@ fd_apply() {
     silent fusiondirectory-insert-schema $ARG zimbra*.schema
   fi
 
-echo $(date) >> $FUSIONDIRECTORY_INSTALLED
-echo $(fusiondirectory-insert-schema -l) >>$FUSIONDIRECTORY_INSTALLED
+  date >> $FUSIONDIRECTORY_INSTALLED
+  fusiondirectory-insert-schema -l >> $FUSIONDIRECTORY_INSTALLED
 fi

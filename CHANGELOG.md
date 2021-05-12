@@ -1,3 +1,10 @@
+## 7.1.2 2021-05-12 <dave at tiredofit dot ca>
+
+   ### Changed
+      - Many script error repairs
+      - Shellcheck fixes on quoting variables
+
+
 ## 7.1.1 2021-05-11 <dave at tiredofit dot ca>
 
    ### Changed
