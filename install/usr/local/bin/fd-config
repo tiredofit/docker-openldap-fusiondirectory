@@ -1,0 +1,25 @@
+#!/bin/bash
+
+if [ ! -n "${ADMIN_PASS}" ] ; then
+    echo "Set an ADMIN_PASS variable"
+    exit 1
+fi
+
+tmp_ldif=$(mktemp)
+slapcat -n1 > ${tmp_ldif}
+dn=${3:-"cn=config,ou=fusiondirectory,$(head -n1 ${tmp_ldif} | sed 's|dn: ||g')"}
+attribute=${1:-"fdLoginMethod"}
+#value=${2:-"LoginHTTPHeader"}
+value=${2:-"LoginPost"}
+
+modify() {
+ldapmodify -H 'ldapi:///' -D "cn=admin,$(head -n1 ${tmp_ldif} | sed 's|dn: ||g')" -w ${ADMIN_PASS} << EOF
+dn: ${3}
+changetype: modify
+replace: $attribute
+$attribute: $value
+
+EOF
+}
+
+modify $attribute $value $dn
