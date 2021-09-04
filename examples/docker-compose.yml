@@ -48,7 +48,7 @@ services:
       - BACKUP_RETENTION=10080
 
       - ENABLE_ZABBIX=TRUE
-      - ZABBIX_HOSTNAME=openldap-fusiondirectory-app
+      - CONTAINER_NAME=openldap-fusiondirectory-app
     
     networks:
       - services

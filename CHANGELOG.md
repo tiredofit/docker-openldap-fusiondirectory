@@ -1,3 +1,9 @@
+## 7.1.3 2021-09-04 <dave at tiredofit dot ca>
+
+   ### Added
+      - Use tiredofit/openldap:7.1.20 as base image
+
+
 ## 7.1.2 2021-05-12 <dave at tiredofit dot ca>
 
    ### Changed

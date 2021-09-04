@@ -1,5 +1,5 @@
-FROM tiredofit/openldap:7.1.16
-LABEL maintainer="Dave Conroy (dave at tiredofit dot ca)"
+FROM tiredofit/openldap:7.1.20
+LABEL maintainer="Dave Conroy (github.com/tiredofit)"
 
 ## Set Environment Varialbes
 ENV FUSIONDIRECTORY_VERSION=1.4-dev \
