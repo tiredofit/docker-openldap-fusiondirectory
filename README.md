@@ -25,12 +25,10 @@ This will build a Docker image for an [OpenLDAP Server](https://sourceforge.net/
 - [Installation](#installation)
   - [Build from Source](#build-from-source)
   - [Prebuilt Images](#prebuilt-images)
-  - [Multi Archictecture](#multi-archictecture)
+  - [Multi Architecture](#multi-architecture)
 - [Configuration](#configuration)
   - [Quick Start](#quick-start)
   - [Persistent Storage](#persistent-storage)
-  - [Quick Start](#quick-start-1)
-  - [Persistent Storage](#persistent-storage-1)
   - [Environment Variables](#environment-variables)
 - [Schema Installation](#schema-installation)
   - [Networking](#networking)
@@ -65,7 +63,7 @@ The following image tags are available along with their tagged release based on 
 | 1.3     | Alpine       | `:latest` |
 | 1.4-dev | Alpine       | `:1.4`    |
 
-### Multi Archictecture
+### Multi Architecture
 Images are built primarily for `amd64` architecture, and may also include builds for `arm/v6`, `arm/v7`, `arm64` and others. These variants are all unsupported. Consider [sponsoring](https://github.com/sponsors/tiredofit) my work so that I can work with various hardware. To see if this image supports multiple architecures, type `docker manifest (image):(tag)`
 
 ## Configuration
@@ -135,6 +133,7 @@ Depending on your choices, the following schemas are available for installation.
 | `PLUGIN_IPMI`            | IPMI Management                          | `FALSE` |
 | `PLUGIN_KOPANO`          | Kopano                                   | `FALSE` |
 | `PLUGIN_MAIL`            | Mail Attributes                          | `TRUE`  |
+| `PLUGIN_MAILINBLACK`     | MailinBlack                              | `FALSE` |
 | `PLUGIN_MIXEDGROUPS`     | Unix/LDAP Groups                         | `FALSE` |
 | `PLUGIN_NAGIOS`          | Nagios Monitoring                        | `FALSE` |
 | `PLUGIN_NETGROUPS`       | NIS                                      | `FALSE` |

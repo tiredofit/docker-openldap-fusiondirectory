@@ -268,6 +268,7 @@ if [ ! -e "${FUSIONDIRECTORY_INSTALLED}" ] || var_true "${REAPPLY_PLUGIN_SCHEMAS
   PLUGIN_LDAPDUMP=${PLUGIN_LDAPDUMP:-"TRUE"}
   PLUGIN_LDAPMANAGER=${PLUGIN_LDAPMANAGER:-"TRUE"}
   PLUGIN_MAIL=${PLUGIN_MAIL:-"TRUE"}
+  PLUGIN_MAILINBLACK=${PLUGIN_MAILINBLACK:-"FALSE"}
   PLUGIN_MIGRATION_MAILROUTING=${PLUGIN_MIGRATION_MAILROUTING:-"FALSE"}
   PLUGIN_MIXEDGROUPS=${PLUGIN_MIXEDGROUPS:-"TRUE"}
   PLUGIN_NAGIOS=${PLUGIN_NAGIOS:-"FALSE"}
@@ -458,6 +459,11 @@ fd_apply() {
   if var_true "${PLUGIN_KOPANO}" ; then
     fd_apply Kopano
     silent fusiondirectory-insert-schema $ARG kopano*.schema
+  fi
+
+  if var_true "${PLUGIN_MAILINBLACK}" ; then
+    fd_apply "Mail in Black"
+    silent fusiondirectory-insert-schema $ARG mailinblack*.schema
   fi
 
   if var_true "${PLUGIN_MIGRATION_MAILROUTING}" ; then
