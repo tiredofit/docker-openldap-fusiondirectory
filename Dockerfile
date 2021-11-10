@@ -1,4 +1,4 @@
-FROM docker.io/tiredofit/openldap:7.1.21
+FROM docker.io/tiredofit/openldap:7.2.0
 LABEL maintainer="Dave Conroy (github.com/tiredofit)"
 
 ## Set Environment Varialbes
