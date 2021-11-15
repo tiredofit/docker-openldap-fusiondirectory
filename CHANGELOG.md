@@ -1,3 +1,9 @@
+## 7.2.1 2021-11-15 <dave at tiredofit dot ca>
+
+   ### Added
+      - Pin to tiredofit/openldap:7.2.1
+
+
 ## 7.2.0 2021-11-09 <dave at tiredofit dot ca>
 
    ### Added
