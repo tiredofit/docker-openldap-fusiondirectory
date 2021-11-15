@@ -1,3 +1,9 @@
+## 7.2.2 2021-11-15 <dave at tiredofit dot ca>
+
+   ### Changed
+      - Set +x bit on Fusiondirectory install scripts
+
+
 ## 7.2.1 2021-11-15 <dave at tiredofit dot ca>
 
    ### Added
