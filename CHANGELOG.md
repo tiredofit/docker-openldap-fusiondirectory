@@ -1,3 +1,11 @@
+## 7.1.23 2021-12-20 <dave at tiredofit dot ca>
+
+   ### Added
+      - Update to alpine 3.15
+      - Keep maintaining OpenLDAP 2.4 / Fusiondirectory 1.4 beta branch
+      - Pin to tiredofit/openldap/2.4-7.1.23
+
+
 ## 7.1.5 2021-10-16 <dave at tiredofit dot ca>
 
    ### Added
