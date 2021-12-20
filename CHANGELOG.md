@@ -1,3 +1,9 @@
+## 7.1.24 2021-12-20 <dave at tiredofit dot ca>
+
+   ### Changed
+      - tiredofit/openldap:2.4-7.1.24
+
+
 ## 7.1.23 2021-12-20 <dave at tiredofit dot ca>
 
    ### Added
