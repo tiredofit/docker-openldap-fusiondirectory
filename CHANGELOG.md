@@ -1,3 +1,9 @@
+## 7.1.25 2022-02-05 <dave at tiredofit dot ca>
+
+   ### Changed
+      - Fix for installation failing with 1.4 due to deprecated attributes for Cas and HTTP AUth
+
+
 ## 7.1.24 2021-12-20 <dave at tiredofit dot ca>
 
    ### Changed

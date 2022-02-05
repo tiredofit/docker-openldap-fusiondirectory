@@ -180,8 +180,6 @@ fdShells: /bin/false
 fdForcePasswordDefaultHash: FALSE
 fdHandleExpiredAccounts: FALSE
 fdForceSSL: FALSE
-fdHttpAuthActivated: FALSE
-fdCasActivated: FALSE
 fdRestrictRoleMembers: FALSE
 fdDisplayErrors: FALSE
 fdLdapStats: FALSE
