@@ -1,3 +1,9 @@
+## 7.1.26 2022-02-10 <dave at tiredofit dot ca>
+
+   ### Changed
+      - Update to support upstream image changes
+
+
 ## 7.1.25 2022-02-05 <dave at tiredofit dot ca>
 
    ### Changed

@@ -1,10 +1,12 @@
-FROM docker.io/tiredofit/openldap:2.4-7.1.24
+FROM docker.io/tiredofit/openldap:2.4-7.1.27
 LABEL maintainer="Dave Conroy (github.com/tiredofit)"
 
 ## Set Environment Varialbes
 ENV FUSIONDIRECTORY_VERSION=1.4-dev \
     FUSIONDIRECTORY_PLUGINS_VERSION=1.4-dev \
-    SCHEMA2LDIF_VERSION=1.3
+    SCHEMA2LDIF_VERSION=1.3 \
+    IMAGE_NAME="tiredofit/openldap-fusiondirectory" \
+    IMAGE_REPO_URL="https://github.com/tiredofit/docker-openldap-fusiondirectory/"
 
 ## Install Schema2LDIF
 RUN set -x && \
