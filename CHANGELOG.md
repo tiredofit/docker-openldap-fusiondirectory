@@ -1,3 +1,10 @@
+## 7.1.0 2022-03-01 <dave at tiredofit dot ca>
+
+   ### Added
+      - Split branches to 2.4/1.3
+      - Upgrade to tiredofit/openldap:2.4-7.2.4
+
+
 ## 7.0.4 2021-05-08 <dave at tiredofit dot ca>
 
    ### Added
