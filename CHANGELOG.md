@@ -1,3 +1,9 @@
+## 7.1.27 2022-03-01 <dave at tiredofit dot ca>
+
+   ### Changed
+      - Make +x bit on the /assets/custom scripts
+
+
 ## 7.1.26 2022-02-10 <dave at tiredofit dot ca>
 
    ### Changed
