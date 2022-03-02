@@ -19,19 +19,27 @@ This will build a Docker image for an [OpenLDAP Server](https://sourceforge.net/
 
 ## Table of Contents
 
-- [Introduction](#introduction)
-    - [Changelog](Changelog.md)
-- [Prerequisites](#prerequisites)
-- [Dependencies](#dependendcies)
+- [About](#about)
+- [Maintainer](#maintainer)
+- [Table of Contents](#table-of-contents)
 - [Installation](#installation)
-- [Quick Start](#quick-start)
+  - [Build from Source](#build-from-source)
+  - [Prebuilt Images](#prebuilt-images)
+  - [Multi Architecture](#multi-architecture)
 - [Configuration](#configuration)
-    - [Data Volumes](#data-volumes)
-    - [Database](#database)
-    - [Environment Variables](#environmentvariables)
-    - [Networking](#networking)
+  - [Quick Start](#quick-start)
+  - [Persistent Storage](#persistent-storage)
+  - [Environment Variables](#environment-variables)
+- [Schema Installation](#schema-installation)
+  - [Networking](#networking)
 - [Maintenance](#maintenance)
-    - [Shell Access](#shell-access)
+  - [Shell Access](#shell-access)
+- [Support](#support)
+  - [Usage](#usage)
+  - [Bugfixes](#bugfixes)
+  - [Feature Requests](#feature-requests)
+  - [Updates](#updates)
+- [License](#license)
 - [References](#references)
 
 # Dependencies
@@ -50,11 +58,14 @@ docker pull tiredofit/openldap-fusiondirectory:(imagetag)
 ```
 The following image tags are available along with their tagged release based on what's written in the [Changelog](CHANGELOG.md):
 
-| Version | Container OS | Tag       |
-| ------- | ------------ | --------- |
-| latest  | Alpine       | `:latest` |
+| Version | OpenLDAP Version | Container OS | Tag        |
+| ------- | ---------------- | ------------ | ---------- |
+| `1.4.x` | 2.6.x            | Alpine       | `:latest`  |
+| `1.4.x` | 2.6.x            | Alpine       | `:2.6-1.4` |
+| `1.4.x` | 2.4.x            | Alpine       | `:2.4-1.4` |
+| `1.3.x` | 2.4.x            | Alpine       | `:2.4-1.3` |
 
-### Multi Archictecture
+### Multi Architecture
 Images are built primarily for `amd64` architecture, and may also include builds for `arm/v6`, `arm/v7`, `arm64` and others. These variants are all unsupported. Consider [sponsoring](https://github.com/sponsors/tiredofit) my work so that I can work with various hardware. To see if this image supports multiple architecures, type `docker manifest (image):(tag)`
 
 ## Configuration
@@ -65,23 +76,18 @@ Images are built primarily for `amd64` architecture, and may also include builds
 
 * Set various [environment variables](#environment-variables) to understand the capabilities of this image.
 * Map [persistent storage](#data-volumes) for access to configuration and data files for backup.
-* Map [Network Ports](#networking) to allow external access.
-
-Start openldap-fusiondirectory using:
-
-```bash
-docker-compose up
-```
-__NOTE__: Please allow up to 3 minutes for the application to start.
-
+* Make [networking ports](#networking) available for public access if necessary
+__NOTE__: Please allow up to 2 minutes for the application to start for the first time if you are generating self signed TLS certificates.
 
 ### Persistent Storage
 
+* Please see [OpenLDAP Image](https://github.com/tiredofit/docker-openldap) for Data Volume Configuration.
+
+There is an additional data volume exposed:
 
 | Directory                         | Description                                                 |
 | --------------------------------- | ----------------------------------------------------------- |
 | `/assets/fusiondirectory-custom/` | Place Schema files here to be imported into FusionDirectory |
-
 
 ### Environment Variables
 
@@ -129,6 +135,7 @@ Depending on your choices, the following schemas are available for installation.
 | `PLUGIN_IPMI`            | IPMI Management                          | `FALSE` |
 | `PLUGIN_KOPANO`          | Kopano                                   | `FALSE` |
 | `PLUGIN_MAIL`            | Mail Attributes                          | `TRUE`  |
+| `PLUGIN_MAILINBLACK`     | MailinBlack                              | `FALSE` |
 | `PLUGIN_MIXEDGROUPS`     | Unix/LDAP Groups                         | `FALSE` |
 | `PLUGIN_NAGIOS`          | Nagios Monitoring                        | `FALSE` |
 | `PLUGIN_NETGROUPS`       | NIS                                      | `FALSE` |
