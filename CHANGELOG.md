@@ -1,3 +1,9 @@
+## 7.1.28 2022-03-01 <dave at tiredofit dot ca>
+
+   ### Added
+      - Use new tiredofit/openldap branch mechanism
+
+
 ## 7.1.27 2022-03-01 <dave at tiredofit dot ca>
 
    ### Changed
