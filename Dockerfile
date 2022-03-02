@@ -40,6 +40,7 @@ RUN set -x && \
     \
     sed -i -e "s|/etc/ldap/schema|/etc/openldap/schema|g" /usr/sbin/fusiondirectory-insert-schema && \
     chmod +x /usr/sbin/fusiondirectory-insert-schema && \
+    chmod +x /assets/custom-scripts/*.sh && \
     \
     rm -rf /usr/src/* && \
     apk del git && \
