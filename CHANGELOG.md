@@ -1,3 +1,9 @@
+## 7.1.2 2022-03-01 <dave at tiredofit dot ca>
+
+   ### Changed
+      - Fix for FROM base image
+
+
 ## 7.1.1 2022-03-01 <dave at tiredofit dot ca>
 
    ### Added
