@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/command/with-contenv /bin/bash
 
 if [ ! -n "${ADMIN_PASS}" ] ; then
     echo "Set an ADMIN_PASS variable"
