@@ -1,3 +1,9 @@
+## 7.1.29 2022-05-15 <dave at tiredofit dot ca>
+
+   ### Added
+      - Pin to tiredofit/openldap:2.6-7.2.7
+
+
 ## 7.1.28 2022-03-01 <dave at tiredofit dot ca>
 
    ### Added
