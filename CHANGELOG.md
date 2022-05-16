@@ -1,3 +1,9 @@
+## 7.1.3 2022-05-15 <dave at tiredofit dot ca>
+
+   ### Changed
+      - Change where schema2ldif is loaded
+
+
 ## 7.1.2 2022-03-01 <dave at tiredofit dot ca>
 
    ### Changed
