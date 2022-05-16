@@ -1,3 +1,9 @@
+## 7.1.30 2022-05-15 <dave at tiredofit dot ca>
+
+   ### Changed
+      - Change location where schema2LDIF is loaded from
+
+
 ## 7.1.29 2022-05-15 <dave at tiredofit dot ca>
 
    ### Added

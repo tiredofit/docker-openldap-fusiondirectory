@@ -13,7 +13,7 @@ RUN set -x && \
     apk update && \
     apk upgrade && \
     apk add git && \
-    curl https://repos.fusiondirectory.org/sources/schema2ldif/schema2ldif-${SCHEMA2LDIF_VERSION}.tar.gz | tar xvfz - --strip 1 -C /usr && \
+    curl -sSL https://github.com/fusiondirectory/schema2ldif/archive/refs/tags/${SCHEMA2LDIF_VERSION}.tar.gz | tar xvfz --strip 1 -C /usr && \
     rm -rf /usr/CHANGELOG && \
     rm -rf /usr/LICENSE && \
     \
