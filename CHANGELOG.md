@@ -1,3 +1,9 @@
+## 7.1.31 2022-05-15 <dave at tiredofit dot ca>
+
+   ### Changed
+      - Bugfix
+
+
 ## 7.1.30 2022-05-15 <dave at tiredofit dot ca>
 
    ### Changed
