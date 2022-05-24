@@ -1,3 +1,10 @@
+## 7.1.29 2022-05-24 <dave at tiredofit dot ca>
+
+   ### Added
+      - Pin to tiredofit/openldap:2.4-7.1.30
+      - Remove Schema2LDIF as its already in upstream
+
+
 ## 7.1.28 2022-05-15 <dave at tiredofit dot ca>
 
    ### Changed
