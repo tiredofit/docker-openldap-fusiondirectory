@@ -4,7 +4,6 @@ LABEL maintainer="Dave Conroy (github.com/tiredofit)"
 ## Set Environment Varialbes
 ENV FUSIONDIRECTORY_VERSION=1.4-dev \
     FUSIONDIRECTORY_PLUGINS_VERSION=1.4-dev \
-    SCHEMA2LDIF_VERSION=1.3 \
     IMAGE_NAME="tiredofit/openldap-fusiondirectory" \
     IMAGE_REPO_URL="https://github.com/tiredofit/docker-openldap-fusiondirectory/"
 
@@ -13,9 +12,6 @@ RUN set -x && \
     apk update && \
     apk upgrade && \
     apk add git && \
-    curl -sSL https://github.com/fusiondirectory/schema2ldif/archive/refs/tags/${SCHEMA2LDIF_VERSION}.tar.gz | tar xvfz - --strip 1 -C /usr && \
-    rm -rf /usr/CHANGELOG && \
-    rm -rf /usr/LICENSE && \
     \
 ## Install FusionDirectory
     mkdir -p /usr/src/fusiondirectory /usr/src/fusiondirectory-plugins && \

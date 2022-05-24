@@ -1,3 +1,9 @@
+## 7.1.33 2022-05-24 <dave at tiredofit dot ca>
+
+   ### Changed
+      - Stop installing Schema2LDIF again, it's already installed in upstream
+
+
 ## 7.1.32 2022-05-24 <dave at tiredofit dot ca>
 
    ### Added
