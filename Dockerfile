@@ -1,4 +1,4 @@
-FROM tiredofit/openldap:2.4-7.1.30
+FROM tiredofit/openldap:2.4-7.1.31
 LABEL maintainer="Dave Conroy (dave at tiredofit dot ca)"
 
 ## Set Environment Varialbes
