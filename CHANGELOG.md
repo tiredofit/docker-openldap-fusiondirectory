@@ -1,3 +1,9 @@
+## 7.1.35 2022-07-09 <dave at tiredofit dot ca>
+
+   ### Added
+      - Pin to tiredofit/docker-openldap-2.6-7.2.10
+
+
 ## 7.1.34 2022-07-05 <dave at tiredofit dot ca>
 
    ### Added
