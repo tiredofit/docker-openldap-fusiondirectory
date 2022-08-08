@@ -1,3 +1,9 @@
+## 7.1.38 2022-08-08 <dave at tiredofit dot ca>
+
+   ### Added
+      - tiredofit/openldap:2.6-7.2.16
+
+
 ## 7.1.37 2022-07-14 <dave at tiredofit dot ca>
 
    ### Added
