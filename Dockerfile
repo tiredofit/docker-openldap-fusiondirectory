@@ -1,4 +1,4 @@
-FROM docker.io/tiredofit/openldap:2.6-7.2.14
+FROM docker.io/tiredofit/openldap:2.6-7.2.16
 LABEL maintainer="Dave Conroy (github.com/tiredofit)"
 
 ## Set Environment Varialbes
@@ -49,4 +49,4 @@ RUN set -x && \
     rm -rf /var/cache/apk/*
 
 ### Add Files
-ADD install /
+COPY install /

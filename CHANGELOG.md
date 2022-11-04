@@ -1,3 +1,10 @@
+## 7.1.39 2022-11-04 <dave at tiredofit dot ca>
+
+   ### Added
+      - tiredofit/openldap:2.6-7.2.16
+      - Switch ADD to COPY in Dockerfile
+
+
 ## 7.1.38 2022-08-08 <dave at tiredofit dot ca>
 
    ### Added
