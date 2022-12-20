@@ -1,3 +1,9 @@
+## 7.1.40 2022-12-20 <dave at tiredofit dot ca>
+
+   ### Changed
+      - Fix for nextcloud schema not being inserted on startup (Credit to Marsu31@github)
+
+
 ## 7.1.39 2022-11-04 <dave at tiredofit dot ca>
 
    ### Added
