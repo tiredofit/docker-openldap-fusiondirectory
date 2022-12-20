@@ -1,3 +1,9 @@
+## 7.1.32 2022-12-20 <dave at tiredofit dot ca>
+
+   ### Changed
+      - Fix for nextcloud schema not loading on startup
+
+
 ## 7.1.31 2022-07-09 <dave at tiredofit dot ca>
 
    ### Added
