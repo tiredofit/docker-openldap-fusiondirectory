@@ -1,7 +1,7 @@
 # github.com/tiredofit/docker-openldap-fusiondirectory
 
 [![GitHub release](https://img.shields.io/github/v/tag/tiredofit/docker-openldap-fusiondirectory?style=flat-square)](https://github.com/tiredofit/docker-openldap-fusiondirectory/releases/latest)
-[![Build Status](https://img.shields.io/github/actions/workflow/status/tiredofit/docker-openldap-fusiondirectory.git/main.yml?branch=2.4-1.4&style=flat-square)](https://github.com/tiredofit/docker-openldap-fusiondirectory.git/actions)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/tiredofit/docker-openldap-fusiondirectorymain.yml?branch=2.4-1.4&style=flat-square)](https://github.com/tiredofit/docker-openldap-fusiondirectory.git/actions)
 [![Docker Stars](https://img.shields.io/docker/stars/tiredofit/openldap-fusiondirectory.svg?style=flat-square&logo=docker)](https://hub.docker.com/r/tiredofit/openldap-fusiondirectory/)
 [![Docker Pulls](https://img.shields.io/docker/pulls/tiredofit/openldap-fusiondirectory.svg?style=flat-square&logo=docker)](https://hub.docker.com/r/tiredofit/openldap-fusiondirectory/)
 [![Become a sponsor](https://img.shields.io/badge/sponsor-tiredofit-181717.svg?logo=github&style=flat-square)](https://github.com/sponsors/tiredofit)
