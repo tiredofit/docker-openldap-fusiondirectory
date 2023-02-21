@@ -1,40 +1,38 @@
-FROM docker.io/tiredofit/openldap:2.6-7.2.16
+FROM docker.io/tiredofit/openldap:2.6-7.2.19
 LABEL maintainer="Dave Conroy (github.com/tiredofit)"
 
-## Set Environment Varialbes
-ENV FUSIONDIRECTORY_VERSION=1.4-dev \
-    FUSIONDIRECTORY_PLUGINS_VERSION=1.4-dev \
-    IMAGE_NAME="tiredofit/openldap-fusiondirectory" \
+ARG FUSIONDIRECTORY_VERSION
+ARG FUSIONDIRECTORY_PLUGINS_VERSION
+
+ENV FUSIONDIRECTORY_VERSION=b246399ff2d3dc74565c9f3897e4a3544e0c51d1 \
+    FUSIONDIRECTORY_REPO_URL=https://github.com/fusiondirectory/fusiondirectory \
+    FUSIONDIRECTORY_PLUGINS_VERSION=b0078c722634cbd42fe2b0231eb8d40c6d87df3e \
+    FUSIONDIRECTORY_PLUGINS_REPO_URL=https://github.com/fusiondirectory/fusiondirectory-plugins \
+    IMAGE_NAME="tiredofit/openldap-fusiondirectory:2.6-1.4" \
     IMAGE_REPO_URL="https://github.com/tiredofit/docker-openldap-fusiondirectory/"
 
-## Install Schema2LDIF
-RUN set -x && \
-    apk update && \
-    apk upgrade && \
-    apk add git && \
+RUN source /assets/functions/00-container && \
+    set -x && \
+    package update && \
+    package upgrade && \
+    package install git && \
     \
-## Install FusionDirectory
-    mkdir -p /usr/src/fusiondirectory /usr/src/fusiondirectory-plugins && \
-    git clone https://gitlab.fusiondirectory.org/fusiondirectory/fd/ /usr/src/fusiondirectory && \
-    cd /usr/src/fusiondirectory && \
-    git checkout ${FUSIONDIRECTORY_VERSION} && \
-    git clone https://gitlab.fusiondirectory.org/fusiondirectory/fd-plugins/ /usr/src/fusiondirectory-plugins && \
-    cd /usr/src/fusiondirectory-plugins && \
-    git checkout ${FUSIONDIRECTORY_PLUGINS_VERSION} && \
+    ## Fetch Install FusionDirectory
+    clone_git_repo "${FUSIONDIRECTORY_REPO_URL}" "${FUSIONDIRECTORY_VERSION}" /usr/src/fusiondirectory && \
+    clone_git_repo "${FUSIONDIRECTORY_PLUGINS_REPO_URL}" "${FUSIONDIRECTORY_PLUGINS_VERSION}" /usr/src/fusiondirectory-plugins && \
     \
-    ## Install Extra FusionDirectory Plugins
-    git clone https://github.com/tiredofit/fusiondirectory-plugin-kopano /usr/src/fusiondirectory-plugin-kopano && \
+    ## Fetch Install Extra FusionDirectory Plugins
+    clone_git_repo https://github.com/tiredofit/fusiondirectory-plugin-kopano main /usr/src/fusiondirectory-plugin-kopano && \
     cp -R /usr/src/fusiondirectory-plugin-kopano/kopano /usr/src/fusiondirectory-plugins/ && \
-    git clone https://github.com/slangdaddy/fusiondirectory-plugin-nextcloud /usr/src/fusiondirectory-plugin-nextcloud && \
+    clone_git_repo https://github.com/slangdaddy/fusiondirectory-plugin-nextcloud master /usr/src/fusiondirectory-plugin-nextcloud && \
     rm -rf /usr/src/fusiondirectory-plugin-nextcloud/src/DEBIAN && \
     mkdir -p /usr/src/fusiondirectory-plugins/nextcloud && \
     cp -R /usr/src/fusiondirectory-plugin-nextcloud/src/* /usr/src/fusiondirectory-plugins/nextcloud/ && \
-    git clone https://github.com/gallak/fusiondirectory-plugins-seafile /usr/src/fusiondirectory-plugins-seafile && \
-    rm -rf /usr/src/fusiondirectory-plugins-seafile/README.md && \
+    clone_git_repo https://github.com/gallak/fusiondirectory-plugins-seafile master /usr/src/fusiondirectory-plugins-seafile && \
     mkdir -p /usr/src/fusiondirectory-plugins/seafile && \
     cp -R /usr/src/fusiondirectory-plugins-seafile/* /usr/src/fusiondirectory-plugins/seafile/ && \
     \
-### Cleanup
+    ### Cleanup
     mkdir -p /etc/openldap/schema/fusiondirectory && \
     rm -rf /usr/src/fusiondirectory/contrib/openldap/rfc2307bis.schema && \
     cp /usr/src/fusiondirectory/contrib/bin/fusiondirectory-insert-schema /usr/sbin && \
@@ -45,8 +43,8 @@ RUN set -x && \
     chmod +x /usr/sbin/fusiondirectory-insert-schema && \
     \
     rm -rf /usr/src/* && \
-    apk del git && \
-    rm -rf /var/cache/apk/*
+    package remove git && \
+    package cleanup
 
 ### Add Files
 COPY install /

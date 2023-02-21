@@ -1,3 +1,13 @@
+## 2.6-1.4-7.1.41 2023-02-21 <dave at tiredofit dot ca>
+
+   ### Added
+      - Pin to tiredofit/openldap:2.6-7.2.19
+      - Stop pulling from mainline 1.4-dev branches instead use
+      - Fusiondirectory b246399ff2d3dc74565c9f3897e4a3544e0c51d1
+      - Fusiondirectory Plugins b0078c722634cbd42fe2b0231eb8d40c6d87df3e
+      - Due to removal of key tools that we just aren't ready to modify quite yet (fusiondirectory-insert schema)
+
+
 ## 7.1.40 2022-12-20 <dave at tiredofit dot ca>
 
    ### Changed
