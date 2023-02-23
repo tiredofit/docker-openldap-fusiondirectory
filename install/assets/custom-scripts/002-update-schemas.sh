@@ -13,9 +13,9 @@ if [ -e "$FUSIONDIRECTORY_INSTALLED" ]; then
 			mkdir -p /tmp/schema
 			mv /etc/openldap/schema/fusiondirectory/* /tmp/schema
 
-			for f in $(find /assets/fusiondirectory-custom/ -name \*.schema -type f); do
-				print_notice "Found Custom Schema: ${f}"
-				cp -R ${f} /etc/openldap/schema/fusiondirectory
+			for custom_schema in $(find /assets/fusiondirectory-custom/ -name \*.schema -type f) ; do
+				print_notice "Found Custom Schema: ${custom_schema}"
+				cp -R "${custom_schema}" /etc/openldap/schema/fusiondirectory
 			done
 
 			cd /etc/openldap/schema/fusiondirectory

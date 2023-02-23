@@ -1,4 +1,4 @@
-dn: cn=default,ou=ppolicies,<BASE_DN>
+dn: cn=default,ou=ppolicies,{{BASE_DN}}
 objectClass: top
 objectClass: device
 objectClass: pwdPolicy

@@ -8,6 +8,6 @@ changetype: add
 objectClass: olcPPolicyConfig
 objectClass: olcOverlayConfig
 olcOverlay: ppolicy
-olcPPolicyDefault: cn=default,ou=ppolicies,<BASE_DN>
+olcPPolicyDefault: cn=default,ou=ppolicies,{{BASE_DN}}
 olcPPolicyHashCleartext: TRUE
 olcPPolicyUseLockout: TRUE

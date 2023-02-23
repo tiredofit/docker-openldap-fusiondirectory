@@ -4,35 +4,35 @@ source /assets/functions/00-container
 source /assets/defaults/10-openldap
 
 if [ -z "$BASE_DN" ]; then
-    IFS='.' read -ra BASE_DN_TABLE <<< "$DOMAIN"
+    IFS='.' read -ra BASE_DN_TABLE <<<"$DOMAIN"
     for i in "${BASE_DN_TABLE[@]}"; do
-      EXT="dc=$i,"
-      BASE_DN=$BASE_DN$EXT
+        EXT="dc=$i,"
+        BASE_DN=$BASE_DN$EXT
     done
 
     BASE_DN=${BASE_DN::-1}
-  fi
+fi
 
-IFS='.' read -a domain_elems <<< "${DOMAIN}"
+IFS='.' read -a domain_elems <<<"${DOMAIN}"
 SUFFIX=""
 ROOT=""
 
-for elem in "${domain_elems[@]}" ; do
-    if [ "x${SUFFIX}" = x ] ; then
+for elem in "${domain_elems[@]}"; do
+    if [ "x${SUFFIX}" = x ]; then
         SUFFIX="dc=${elem}"
-      BASE_DN="${SUFFIX}" 
+        BASE_DN="${SUFFIX}"
         ROOT="${elem}"
     else
-      BASE_DN="${BASE_DN},dc=${elem}" 
+        BASE_DN="${BASE_DN},dc=${elem}"
     fi
 done
 
 file_env "ADMIN_PASS"
 
 print_notice "Fixing ppolicy defaults"
-sed -i "s|<BASE_DN>|${BASE_DN}|g" /assets/slapd/config/ppolicy/01-ppolicy-config.ldif
-sed -i "s|<BASE_DN>|${BASE_DN}|g" /assets/slapd/config/ppolicy/02-ppolicy-ou.ldif
-sed -i "s|<BASE_DN>|${BASE_DN}|g" /assets/slapd/config/ppolicy/03-ppolicy-default.ldif
+sed -i "s|{{BASE_DN}}|${BASE_DN}|g" /assets/slapd/config/ppolicy/01-ppolicy-config.ldif
+sed -i "s|{{BASE_DN}}|${BASE_DN}|g" /assets/slapd/config/ppolicy/02-ppolicy-ou.ldif
+sed -i "s|{{BASE_DN}}|${BASE_DN}|g" /assets/slapd/config/ppolicy/03-ppolicy-default.ldif
 ldapadd -Y EXTERNAL -Q -H ldapi:/// -f /assets/slapd/config/ppolicy/01-ppolicy-config.ldif
-ldapadd -H 'ldapi:///' -D "cn=admin,${BASE_DN}" -w $ADMIN_PASS -f /assets/slapd/config/ppolicy/02-ppolicy-ou.ldif
-ldapadd -H 'ldapi:///' -D "cn=admin,${BASE_DN}" -w $ADMIN_PASS -f /assets/slapd/config/ppolicy/03-ppolicy-default.ldif
+ldapadd -H 'ldapi:///' -D "cn=admin,${BASE_DN}" -w "${ADMIN_PASS}" -f /assets/slapd/config/ppolicy/02-ppolicy-ou.ldif
+ldapadd -H 'ldapi:///' -D "cn=admin,${BASE_DN}" -w "${ADMIN_PASS}" -f /assets/slapd/config/ppolicy/03-ppolicy-default.ldif

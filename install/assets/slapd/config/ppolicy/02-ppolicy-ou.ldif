@@ -1,4 +1,4 @@
-dn: ou=ppolicies,<BASE_DN>
+dn: ou=ppolicies,{{BASE_DN}}
 objectClass: organizationalUnit
 objectClass: top
 ou: ppolicies
