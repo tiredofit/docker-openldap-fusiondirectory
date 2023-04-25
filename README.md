@@ -55,17 +55,17 @@ Builds of the image are available on [Docker Hub](https://hub.docker.com/r/tired
 ```bash
 docker pull docker.io/tiredofdit/openldap-fusiondirectory:(imagetag)
 ```
-Builds of the image are also available on the [Github Container Registry](https://github.com/tiredofit/docker-openldap-fusiondirectory/pkgs/container/docker-openldap-fusiondirectory) 
- 
+Builds of the image are also available on the [Github Container Registry](https://github.com/tiredofit/docker-openldap-fusiondirectory/pkgs/container/docker-openldap-fusiondirectory)
+
 ```
 docker pull ghcr.io/tiredofit/docker-openldap-fusiondirectory:(imagetag)
-``` 
+```
 
-Builds of the image are also available on the [Github Container Registry](https://github.com/tiredofit/docker-tiredofdit/pkgs/container/docker-tiredofdit) 
- 
+Builds of the image are also available on the [Github Container Registry](https://github.com/tiredofit/docker-tiredofdit/pkgs/container/docker-tiredofdit)
+
 ```
 docker pull ghcr.io/tiredofit/docker-tiredofdit:(imagetag)
-``` 
+```
 
 The following image tags are available along with their tagged release based on what's written in the [Changelog](CHANGELOG.md):
 
@@ -112,11 +112,11 @@ Be sure to view the following repositories to understand all the customizable op
 | [OpenLDAP](https://github.com/tiredofit/docker-openldap/) | OpenLDAP based on Alpine Linux         |
 
 
-| Variable                     | Description               | Default                |
-| ---------------------------- | ------------------------- | ---------------------- |
-| `FUSIONDIRECTORY_ADMIN_USER` | Default FD Admin User     | `admin`                |
-| `FUSIONDIRECTORY_ADMIN_PASS` | Default FD Admin Password | `admin`                |
-| `ORGANIZATION`               | Organization Name         | `Example Organization` |
+| Variable                     | Description               | Default                | `_FILE` |
+| ---------------------------- | ------------------------- | ---------------------- | ------- |
+| `FUSIONDIRECTORY_ADMIN_USER` | Default FD Admin User     | `admin`                | x       |
+| `FUSIONDIRECTORY_ADMIN_PASS` | Default FD Admin Password | `admin`                | x       |
+| `ORGANIZATION`               | Organization Name         | `Example Organization` |         |
 
 ## Schema Installation
 Depending on your choices, the following schemas are available for installation. You must have these also enabled on the FusionDirectory application image to make use of it. If you would like to reapply the schemas set `REAPPLY_PLUGIN_SCHEMAS` to `TRUE`.

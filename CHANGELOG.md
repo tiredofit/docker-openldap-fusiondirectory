@@ -1,4 +1,4 @@
-## 2.6-7.4.1 2023-03-30 <dave at tiredofit dot ca>
+## 2.6-1.4-7.4.1 2023-03-30 <dave at tiredofit dot ca>
 
    ### Added
       - Pin to tiredofit/openldap:2.6-7.4.1

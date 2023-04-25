@@ -35,12 +35,17 @@ if [ ! -e "${FUSIONDIRECTORY_INSTALLED}" ]; then
 
     CN_ADMIN="cn=admin,ou=aclroles,${BASE_DN}"
     CN_ADMIN_BS64="$(echo -n "${CN_ADMIN}" | base64 | tr -d '\n')"
-    FUSIONDIRECTORY_ADMIN_USER=${FUSIONDIRECTORY_ADMIN_USER:-fd-admin}
-    file_env "FUSIONDIRECTORY_ADMIN_PASS" "admin"
-    file_env "ADMIN_PASS"
+    transform_var \
+                    ADMIN_PASS \
+                    FUSIONDIRECTORY_ADMIN_USER \
+                    FUSIONDIRECTORY_ADMIN_PASS \
+                    READONLY_USER_USER \
+                    READONLY_USER_PASS
+
+    FUSIONDIRECTORY_ADMIN_USER=${FUSIONDIRECTORY_ADMIN_USER:-"fd-admin"}
+    FUSIONDIRECTORY_ADMIN_PASS=${FUSIONDIRECTORY_ADMIN_PASS:-"admin"}
     ADMIN_PASS_ENCRYPTED="$(slappasswd -s "$ADMIN_PASS")"
     FUSIONDIRECTORY_ADMIN_PASS_ENCRYPTED="$(slappasswd -s "$FUSIONDIRECTORY_ADMIN_PASS")"
-    file_env "READONLY_USER_PASS"
     READONLY_USER_PASS_ENCRYPTED="$(slappasswd -s "$READONLY_USER_PASS")"
     ORGANIZATION=${ORGANIZATION:-Example Organization}
     UID_FD_ADMIN="uid=${FUSIONDIRECTORY_ADMIN_USER},${BASE_DN}"
@@ -223,9 +228,9 @@ EOF
 
     ### Step 4
     print_notice "Adding ppolicy defaults"
-    sed -i "s|<BASE_DN>|${BASE_DN}|g" /assets/slapd/config/ppolicy/01-ppolicy-config.ldif
-    sed -i "s|<BASE_DN>|${BASE_DN}|g" /assets/slapd/config/ppolicy/02-ppolicy-ou.ldif
-    sed -i "s|<BASE_DN>|${BASE_DN}|g" /assets/slapd/config/ppolicy/03-ppolicy-default.ldif
+    sed -i "s|{{BASE_DN}}|${BASE_DN}|g" /assets/slapd/config/ppolicy/01-ppolicy-config.ldif
+    sed -i "s|{{ASE_DN}}|${BASE_DN}|g" /assets/slapd/config/ppolicy/02-ppolicy-ou.ldif
+    sed -i "s|{{BASE_DN}}|${BASE_DN}|g" /assets/slapd/config/ppolicy/03-ppolicy-default.ldif
     silent ldapadd -Y EXTERNAL -Q -H ldapi:/// -f /assets/slapd/config/ppolicy/01-ppolicy-config.ldif
     silent ldapadd -H 'ldapi:///' -D "cn=admin,${BASE_DN}" -w "${ADMIN_PASS}" -f /assets/slapd/config/ppolicy/02-ppolicy-ou.ldif
     silent ldapadd -H 'ldapi:///' -D "cn=admin,${BASE_DN}" -w "${ADMIN_PASS}" -f /assets/slapd/config/ppolicy/03-ppolicy-default.ldif
