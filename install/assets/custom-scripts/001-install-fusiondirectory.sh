@@ -35,7 +35,7 @@ if [ ! -e "${FUSIONDIRECTORY_INSTALLED}" ]; then
 
     CN_ADMIN="cn=admin,ou=aclroles,${BASE_DN}"
     CN_ADMIN_BS64="$(echo -n "${CN_ADMIN}" | base64 | tr -d '\n')"
-    transform_var \
+    transform_file_var \
                     ADMIN_PASS \
                     FUSIONDIRECTORY_ADMIN_USER \
                     FUSIONDIRECTORY_ADMIN_PASS \
