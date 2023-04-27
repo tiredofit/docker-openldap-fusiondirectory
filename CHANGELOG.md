@@ -1,3 +1,9 @@
+## 2.6-1.4-7.5.0 2023-04-26 <dave at tiredofit dot ca>
+
+   ### Added
+      - Introduce support for '_FILE' environment variables
+
+
 ## 2.5-1.4-7.5.0 2023-04-26 <dave at tiredofit dot ca>
 
    ### Added
