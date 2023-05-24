@@ -53,7 +53,7 @@ Clone this repository and build the image with `docker build -t (imagename) .`
 Builds of the image are available on [Docker Hub](https://hub.docker.com/r/tiredofit/openldap-fusiondirectory)
 
 ```bash
-docker pull docker.io/tiredofdit/openldap-fusiondirectory:(imagetag)
+docker pull docker.io/tiredofit/openldap-fusiondirectory:(imagetag)
 ```
 Builds of the image are also available on the [Github Container Registry](https://github.com/tiredofit/docker-openldap-fusiondirectory/pkgs/container/docker-openldap-fusiondirectory)
 
