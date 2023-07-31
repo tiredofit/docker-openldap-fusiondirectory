@@ -1,4 +1,4 @@
-FROM docker.io/tiredofit/openldap:2.6-7.6.2
+FROM docker.io/tiredofit/openldap:2.6-7.6.3
 LABEL maintainer="Dave Conroy (github.com/tiredofit)"
 
 ARG FUSIONDIRECTORY_VERSION
