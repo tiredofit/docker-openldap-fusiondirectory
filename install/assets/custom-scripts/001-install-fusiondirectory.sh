@@ -229,7 +229,7 @@ EOF
     ### Step 4
     print_notice "Adding ppolicy defaults"
     sed -i "s|{{BASE_DN}}|${BASE_DN}|g" /assets/slapd/config/ppolicy/01-ppolicy-config.ldif
-    sed -i "s|{{ASE_DN}}|${BASE_DN}|g" /assets/slapd/config/ppolicy/02-ppolicy-ou.ldif
+    sed -i "s|{{BASE_DN}}|${BASE_DN}|g" /assets/slapd/config/ppolicy/02-ppolicy-ou.ldif
     sed -i "s|{{BASE_DN}}|${BASE_DN}|g" /assets/slapd/config/ppolicy/03-ppolicy-default.ldif
     silent ldapadd -Y EXTERNAL -Q -H ldapi:/// -f /assets/slapd/config/ppolicy/01-ppolicy-config.ldif
     silent ldapadd -H 'ldapi:///' -D "cn=admin,${BASE_DN}" -w "${ADMIN_PASS}" -f /assets/slapd/config/ppolicy/02-ppolicy-ou.ldif
