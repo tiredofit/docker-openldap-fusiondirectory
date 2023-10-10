@@ -1,3 +1,9 @@
+## 2.6-1.4-7.6.4 2023-10-10 <yokaishogun@github>
+
+   ### Changed
+      - Fix for ppolicy on new installations
+
+
 ## 2.6-1.4-7.6.3 2023-07-31 <dave at tiredofit dot ca>
 
    ### Added
