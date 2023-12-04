@@ -1,3 +1,9 @@
+## 2.6-1.4-7.6.5 2023-12-04 <dave at tiredofit dot ca>
+
+   ### Added
+      - Pin to tiredofit/openldap:2.6-7.6.5
+
+
 ## 2.6-1.4-7.6.5 2023-11-16 <dave at tiredofit dot ca>
 
    ### Added
