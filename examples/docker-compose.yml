@@ -1,9 +1,8 @@
-version: '3.7'
 services:
   
   openldap-fusiondirectory-app:
     hostname: ldap.example.com
-    image: tiredofit/openldap-fusiondirectory
+    image: tiredofit/openldap-fusiondirectory:2.6-1.4
     container_name: openldap-fusiondirectory-app
     ports:
       - 389:389
@@ -14,6 +13,9 @@ services:
       - ./config:/etc/openldap/slapd.d
       - ./certs:/certs
     environment:
+      - TIMEZONE=America/Vancouver
+      - CONTAINER_NAME=openldap-fusiondirectory-app
+      
       - HOSTNAME=ldap.example.com     
       - LOG_LEVEL=256
       - DOMAIN=example.org
@@ -47,8 +49,16 @@ services:
       - BACKUP_INTERVAL=0400
       - BACKUP_RETENTION=10080
 
-      - ENABLE_ZABBIX=TRUE
-      - CONTAINER_NAME=openldap-fusiondirectory-app
+      - PLUGIN_AUDIT=TRUE
+      - PLUGIN_DSA=TRUE
+      - PLUGIN_LDAPDUMP=TRUE
+      - PLUGIN_LDAPMANAGER=TRUE
+      - PLUGIN_MAIL=TRUE
+      - PLUGIN_PERSONAL=TRUE
+      - PLUGIN_PPOLICY=TRUE
+      - PLUGIN_SSH=TRUE
+      - PLUGIN_SUDO=TRUE
+      - PLUGIN_WEBSERVICE=TRUE
     
     networks:
       - services
@@ -56,4 +66,4 @@ services:
 
 networks:
   services:
-    external: TRUE
+    external: true
