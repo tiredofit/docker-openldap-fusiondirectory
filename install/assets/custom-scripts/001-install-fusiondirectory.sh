@@ -142,7 +142,7 @@ ou: tokens
 
 dn: cn=config,ou=fusiondirectory,${BASE_DN}
 changeType: add
-fdTheme: default
+fdTheme: breezy
 fdTimezone: ${TIMEZONE}
 fusionConfigMd5: 7fd38d273a2f2e14c749467f4c38a650
 fdSchemaCheck: TRUE
