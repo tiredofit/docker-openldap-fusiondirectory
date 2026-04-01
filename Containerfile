@@ -111,11 +111,6 @@ RUN echo "" && \
     clone_git_repo https://github.com/tiredofit/fusiondirectory-plugin-kopano main /usr/src/fusiondirectory-plugin-kopano && \
     cp -R /usr/src/fusiondirectory-plugin-kopano/kopano "${GIT_REPO_SRC_FUSIONDIRECTORY_PLUGINS%/}" && \
     container_build_log add "FusionDirectory Kopano Plugin Schema" "main" "https://github.com/tiredofit/fusiondirectory-plugin-kopano" && \
-    clone_git_repo https://github.com/slangdaddy/fusiondirectory-plugin-nextcloud master /usr/src/fusiondirectory-plugin-nextcloud && \
-    rm -rf /usr/src/fusiondirectory-plugin-nextcloud/src/DEBIAN && \
-    mkdir -p "${GIT_REPO_SRC_FUSIONDIRECTORY_PLUGINS%/}"/nextcloud && \
-    cp -R /usr/src/fusiondirectory-plugin-nextcloud/src/* "${GIT_REPO_SRC_FUSIONDIRECTORY_PLUGINS%/}"/nextcloud/ && \
-    container_build_log add "FusionDirectory Nextcloud Plugin Schema" "master" "https://github.com/slangdaddy/fusiondirectory-plugin-nextcloud" && \
     clone_git_repo https://github.com/gallak/fusiondirectory-plugins-seafile master /usr/src/fusiondirectory-plugins-seafile && \
     mkdir -p "${GIT_REPO_SRC_FUSIONDIRECTORY_PLUGINS%/}"/seafile && \
     cp -R /usr/src/fusiondirectory-plugins-seafile/* "${GIT_REPO_SRC_FUSIONDIRECTORY_PLUGINS%/}"/seafile/ && \
