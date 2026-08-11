@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: © 2025 Nfrastack <code@nfrastack.com>
+# SPDX-FileCopyrightText: © 2026 Nfrastack <code@nfrastack.com>
 #
 # SPDX-License-Identifier: MIT
 
@@ -77,6 +77,7 @@ RUN echo "" && \
     patch -d /usr/src/php -p1 < /usr/src/php/fix-lfs64.patch && \
     ./buildconf --force && \
     ./configure \
+                CFLAGS="-std=gnu17" \
                 --prefix=/usr/local/php \
                 --disable-all \
                 --disable-cgi \

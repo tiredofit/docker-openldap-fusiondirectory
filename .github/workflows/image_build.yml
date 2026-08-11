@@ -29,6 +29,7 @@ jobs:
       platforms: ${{ matrix.arch }}
       push_dockerhub: ${{ matrix.push_dockerhub || true }}
       push_ghcr: ${{ matrix.push_ghcr || true }}
+      base_image_version: ${{ matrix.base_image_version || '' }}
     secrets: inherit
   cleanup:
     needs: [ build ]
