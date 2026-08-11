@@ -1,3 +1,12 @@
+## 2.6-8.1.0 2026-08-11 <code at nfrastack dot com>
+
+   ### Added
+      - Pin to nfrastack/openldap:2.6-8.1.0
+
+   ### Changed
+      - Remove 3rd party nextcloud plugin
+
+
 ## 2.6-1.5-8.0.2 2026-03-10 <code at nfastack dot com>
 
    ### Added
