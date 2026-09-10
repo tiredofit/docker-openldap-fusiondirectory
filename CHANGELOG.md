@@ -1,3 +1,9 @@
+## 2.6-1.5-8.1.1 2026-09-09 <code at nfrastack dot com>
+
+   ### Added
+      - Pin to nfrastack/openldap:2.6-8.1.1
+
+
 ## 2.6-8.1.0 2026-08-11 <code at nfrastack dot com>
 
    ### Added
